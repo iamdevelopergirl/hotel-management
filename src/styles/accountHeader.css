@@ -1,0 +1,29 @@
+.na-account{
+    height: 20px;
+    line-height: 16px;
+    padding-top: 2px;
+    font-size: 12px;
+    text-align: right;
+    color: #0089c6;
+    cursor: pointer;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.row{
+    display: flex;
+    flex-flow: row;
+}
+.column {
+    display: flex;
+    flex-flow: column;
+}
+
+.popup-container {
+    width: 183px;
+    height: 40px;
+    position: relative;
+    margin-left: 710px;
+    justify-content: center;
+}

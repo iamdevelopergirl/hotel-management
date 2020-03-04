@@ -11,4 +11,9 @@
         </a>
         #f08216
 
+        rgb(252, 227, 205) - focus
+
 1. Add eye in password
+2. Handle the scroll
+3. Mouse hover or move leave for tile
+

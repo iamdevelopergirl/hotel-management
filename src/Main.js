@@ -12,10 +12,6 @@ class Main extends React.Component{
             loggedIn : false
         }
     }
-
-    isLoggedIn(){
-        return this.state.loggedIn;
-    }
     
     render(){
         return (
