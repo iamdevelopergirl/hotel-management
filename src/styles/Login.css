@@ -1,0 +1,58 @@
+
+.login-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+    height: 250px;
+}
+div > input {
+    width : 250px;
+    height : 26px;
+    border : 3px inset #f08216;
+    border-radius : 10px;
+    padding: 10px;
+    font-size: 14px;
+}
+
+div > input:focus {
+    background-color : #f9dec3;
+    outline : none;
+}
+
+.input-container{
+    display: flex;
+}
+
+.icon{
+    min-width: 50px;
+    min-width: 30px;
+    text-align: center;
+    background: transparent;
+    color:white;
+    padding:10px;
+}
+
+.submit-login{
+    width : 280px;
+    height : 40px;
+    position: relative;
+    left: 50px;
+}
+
+.signin{
+    width: inherit;
+    height: inherit;
+    border: 1px inset #f9dec3;
+    background-color: #f08216;
+    box-shadow: 1px;
+    border-radius : 8px;
+    color:black;
+    font-size: 14px;
+}
+
+.signin:hover{
+    background-color: #f9dec3;
+    color: #f08216;
+    font-size: 16px;
+}

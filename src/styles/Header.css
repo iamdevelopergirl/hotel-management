@@ -1,0 +1,30 @@
+.login-button-wrap{
+    position: relative;
+}
+.login-link{
+    position: fixed;
+    width: 60px;
+    height: 24px;
+    top : 40px;
+    right: 100px;
+    border : 1px solid white;
+    background-color: transparent;
+    border-radius: 5px;
+    justify-content: center;
+}
+.link{
+    font-size: 13px;
+    line-height: 1.42857143;
+    font-weight: normal;
+    text-decoration: none; 
+    color: white;
+}
+
+.login-link:hover{
+    border: 1px solid #f08216;
+    background-color : white;
+}
+
+.link:hover{
+    color: #f08216;
+}
