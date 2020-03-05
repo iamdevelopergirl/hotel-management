@@ -12,8 +12,27 @@ export default class HotelList extends React.Component{
           ];
     }
 
-    _handleOptionsClick(){
+    _handleOptionsClick(option){
+        this._handleAction(option);
+    }
 
+    _handleAction(option) {
+        switch(option) {
+          case "Edit":
+            this._callEdit();
+            break;
+          case "Delete":
+            this._callDelete();
+            break;
+        }
+    }
+
+    _callEdit(){
+        this.props.performAction("Edit", this.props.item.id);
+    }
+
+    _callDelete(){
+        this.props.performAction("Delete", this.props.item.id,); 
     }
 
     render(){

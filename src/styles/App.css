@@ -1,4 +1,17 @@
-.App-logo {
+html, body {
+height: 100%;
+}
+
+body {
+min-width: 1020px;
+min-height: 100%;
+}
+
+body.no-overflow {
+overflow: hidden;
+}
+  
+  .App-logo {
   height: 40vmin;
   pointer-events: none;
 }

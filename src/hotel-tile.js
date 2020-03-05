@@ -32,11 +32,11 @@ export default class HotelTile extends React.Component{
     }
 
     _callEdit(){
-        this.props.performAction(this.props.item.id, "Edit");
+        this.props.performAction("Edit", this.props.item.id);
     }
 
     _callDelete(){
-        this.props.performAction(this.props.item.id, "Delete"); 
+        this.props.performAction("Delete", this.props.item.id); 
     }
 
     render(){

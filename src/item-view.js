@@ -19,7 +19,7 @@ export default class ItemsView extends React.Component {
             viewType = <ItemsTileView items={this.props.items} performAction={this.props.performAction} stopPropagation={this._stopPropagation}/>
         }
         else if(this.props.viewType === "ListView"){
-            viewType = <ItemsListView items={this.props.items}/>;
+            viewType = <ItemsListView items={this.props.items} performAction={this.props.performAction}/>;
         }
         return(
             <div className="items-content">
@@ -51,7 +51,7 @@ export class ItemsListView extends React.Component {
     render(){
         return(
             <div className="items-list-view">
-                {this.props.items.map((item, index) => <HotelList key={item.id} item={item}/>)}
+                {this.props.items.map((item, index) => <HotelList key={item.id} item={item} performAction={this.props.performAction}/>)}
             </div>
         )
     }

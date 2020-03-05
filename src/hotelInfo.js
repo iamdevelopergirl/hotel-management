@@ -5,7 +5,7 @@ import {ListViewToggle, TileViewToggle} from './view-toggle.js';
 import ItemsView from './item-view.js';
 import logo from './images/hotel-img.jpeg';
 import ModalContainer from './modal-container.js';
-
+import {isNil, isEmptyObject} from './utils.js';
 const mockItems = 
     [{
         id : "1",
@@ -52,32 +52,108 @@ class HotelInfo extends React.Component{
             showModal : false,
             toDisplayModal : "Edit",
             preventSetState : false,
-            modalData : {}
+            modalData : {},
+            mainContainerStyle: {},
+            preventSetState : false
         }
+        this._handleScroll = this._handleScroll.bind(this);
         this._handleSwitchViewType = this._handleSwitchViewType.bind(this);
         this._performAction = this._performAction.bind(this);
+        this._handleModal = this._handleModal.bind(this);
+        this._onAddNewClicked = this._onAddNewClicked.bind(this);
     }
 
-    _showModal(id, modalType) {
+    _handleModal(){
         this.setState({
-          showModal: true,
-          toDisplayModal: modalType,
-          preventSetState: false
-        });
+            showModal : false
+        })
     }
 
-    _performAction(id, action){
+    _showModal(modalType, id = null) {
+        let tempData = {};
+        if(!isNil(id)){
+            for(let i in mockItems){
+                if(mockItems[i].id === id){
+                    tempData = mockItems[i];
+                break;  
+            }
+            }
+            this.setState({
+                showModal: true,
+                toDisplayModal: modalType,
+                preventSetState: false,
+                modalData : tempData
+            });
+        }
+        else{
+            this.setState({
+                showModal: true,
+                toDisplayModal: modalType,
+                preventSetState: false,
+                modalData : tempData
+            });
+        }
+    }
+
+    _performAction(action, id){
         switch(action){
             case "Edit":
-                this._showModal(id, action);
+                this._showModal(action, id);
                 break;
             case "Delete":
+                this._showModal(action, id);
                 break;
+            case "Add":
+                this._showModal("Edit");
         }
+    }
+
+    _onAddNewClicked(){
+        this._performAction("Add");
     }
 
     _handleSwitchViewType(selectedViewType){
         this.setState({selectedViewType: selectedViewType, preventSetState: false});
+    }
+
+    _getBody() {
+        return document.body;
+    }
+
+    _handleScroll() {
+        const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
+        const body = this._getBody();
+        const html = document.documentElement;
+        const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+        const windowBottom = windowHeight + window.pageYOffset;
+        const {
+          mainContainerStyle =  {},
+        } = this.state;
+    
+        if(body.scrollTop < 60) {
+          if (mainContainerStyle.position !== "absolute") {
+            this.setState({
+              mainContainerStyle : {position: "absolute"},
+              preventSetState : true
+            }); 
+          }
+        }
+        else {
+          if (mainContainerStyle.position === "absolute") {
+            this.setState({
+              mainContainerStyle : {position: "fixed", top: 0},
+              preventSetState : true
+            });
+          }
+        }
+      }
+
+    componentDidMount(){
+        window.addEventListener("scroll", this._handleScroll);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("scroll", this._handleScroll);
     }
 
     render(){
@@ -85,14 +161,12 @@ class HotelInfo extends React.Component{
         const background = (this.state.selectedViewType === "TileView") ? 'content-container--greybg' : 'content-container--whitebg';
         itemsView = (<ItemsView viewType={this.state.selectedViewType} items={mockItems} performAction={this._performAction}/>);
     return(
-        <div className="hotel-container column">
+        <div>
             {
-                this.state.showModal ? <ModalContainer toDisplay={this.state.toDisplayModal} /> : null
+                this.state.showModal ? <ModalContainer toDisplay={this.state.toDisplayModal} modalData={this.state.modalData} handleModal={this._handleModal}/> : null
             }
-            <div className="header">
-                <AccountHeader email="elakya" showPopup/>
-            </div>
-            <div className="main-container">
+            <AccountHeader email="elakya" showPopup/>
+            <div className="main-container" style={this.state.mainContainerStyle}>
                 <div className="container-gradient"></div>
                 <div className="container-under-banner"></div>
                 <div className="content column">
@@ -101,10 +175,17 @@ class HotelInfo extends React.Component{
                         <div className="main-ui-icon"></div>
                         <div className="main-ui-title"><b>Hotel Management Tool</b></div>
                     </div>
-                    <div className="row add-login-widget">
-                        <div className="login-widget"></div>
-                        <div className="favorites-widget"></div>
-                        <div className="add-item-widget"></div>
+                    <div className="row add-item-widget">
+                        <div className="hotel-widget1 background"></div>
+                        <div className="hotel-widget2 background"></div>
+                        <div className="hotel-widhet3 background"></div>
+                        <div className="hotel-widhet4 background"></div>
+                        <div className="hotel-widhet5 background"></div>
+                        <div className="add-item">
+                            <div className="add-new">
+                                <div className="icn-container" onClick={this._onAddNewClicked}></div>
+                            </div>
+                        </div>
                     </div>
                     <div className="search-toggle-container">
                         <div className="search-box">

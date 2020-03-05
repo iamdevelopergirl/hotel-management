@@ -1,6 +1,7 @@
 import React from 'react';
 import './styles/hotelInfo.css';
 import AddEditModal from './add-edit-modal.js';
+import DeleteConfirmation from './delete-confirmation.js';
 
 export default class ModalContainer extends React.Component{
     constructor(props){
@@ -9,15 +10,20 @@ export default class ModalContainer extends React.Component{
 
     render(){
         let view = null;
+        let style = {};
         switch(this.props.toDisplay){
             case "Edit":
-                view = <AddEditModal />;
+                view = <AddEditModal modalData={this.props.modalData} handleModal={this.props.handleModal}/>;
+                break;
+            case "Delete":
+                view = <DeleteConfirmation handleModal={this.props.handleModal}/>
+                style = {'height': 719};
                 break;
         }
         return(
             <div>
                 <div className="grey-overlay grey-overlay--short-modal"></div>
-                <div id="modal-container">
+                <div id="modal-container" style={style}>
                     {view}
                 </div>
             </div>

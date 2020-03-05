@@ -27,3 +27,16 @@
     margin-left: 710px;
     justify-content: center;
 }
+
+.header{
+    width: 100%;
+    margin: 0 auto;
+    height: 60px;
+    background-color: #ffffff;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    }

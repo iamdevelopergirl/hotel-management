@@ -1,0 +1,92 @@
+.delete{
+opacity:0.95;
+}
+
+.delete-logo {
+width:100px;
+height:100px;
+margin: auto;
+margin-top:196px;
+background-size: 100px 100px;
+}
+
+.unsure-logo {
+background-image: url("../images/close-logo.png");
+}
+
+.delete-item-header {
+width: 920px;
+height: 41px;
+font-family: "Segoe UI", "Helvetica Neue", "HelveticaNeue", Helvetica, "Lucida Sans Unicode", Arial, Sans-serif;
+font-size: 36px;
+font-weight: 300;
+text-align: center;
+color: #333333;
+margin: auto;
+margin-top:20px;
+}
+
+.delete-item-text {
+width: 636px;
+min-height: 21px;
+font-family: "Segoe UI", "Helvetica Neue", "HelveticaNeue", Helvetica, "Lucida Sans Unicode", Arial, Sans-serif;
+font-size: 16px;
+text-align: center;
+color: #333333;
+margin: auto;
+margin-top:10px;
+padding-top:5px;
+}
+
+.confirm-delete-item {
+min-width: 164px;
+max-width: 230px;
+height: 40px;
+font-family: "Segoe UI", "Helvetica Neue", "HelveticaNeue", Helvetica, "Lucida Sans Unicode", Arial, Sans-serif;
+font-size: 14px;
+cursor: pointer;
+margin: 50px auto 0px;
+border: none;
+display: block;
+background-color: #f08216;
+box-shadow: 1px;
+border-radius : 8px;
+color:black;
+font-size: 14px;
+}
+
+.confirm-delete-item:hover{
+    background-color:#f9dec3;
+    color: #f08216;
+    font-size: 16px;
+}
+
+.confirm-delete-item:focus,
+.confirm-delete-item:hover{
+    outline: none;
+    box-shadow: 0 0 10px 0 #f08216;
+    border: solid 1px #f08216;
+}
+
+.delete-item-cancel-button {
+width: 280px;
+height: 16px;
+font-family: "Helvetica Neue", "HelveticaNeue", Helvetica, "Lucida Sans Unicode", Arial, Sans-serif;
+font-size: 14px;
+text-align: center;
+color: #f08216;
+margin: auto;
+margin-top:20px;
+cursor: pointer;
+border: none;
+display: block;
+}
+
+.delete-item-cancel-button:hover{
+    font-size : 16px;
+}
+.delete-item-cancel-button:focus{
+    outline : none;
+    border : none;
+}
+    

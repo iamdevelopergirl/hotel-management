@@ -69,8 +69,7 @@
     top: 15px;
 }
 
-.add-login-widget{
-    background: white;
+.add-item-widget{
     width: 992px;
     padding-left: 0;
     padding-right: 0;
@@ -78,6 +77,54 @@
     margin-left: 0;
     margin-top: 67px;
     position: relative;
+}
+
+.background{
+width: 182px;
+height: 70px;
+background-color: #f2f2f2;
+border: solid 1px #dadada;
+cursor: pointer;
+border-radius: 10px;
+visibility: hidden;
+}
+
+.add-item{
+    width: 82px;
+    padding: 0;
+}
+
+.icn-container{
+width: 30px;
+height: 30px;
+margin-left: 26px;
+margin-right: 26px;
+margin-top: 20px;
+margin-bottom: 20px;
+background-image: url(../images/ic-nav-add-item.svg);
+}
+
+.add-new{
+width: 82px;
+height: 70px;
+background-color: #f08216;
+border: solid 1px #ffd664;
+cursor: pointer;
+}
+
+.add-new:hover{
+background-color: #f08216;
+border: solid 1px #f8a156;
+}
+
+.add-new:active{
+background-color: #fac25a;
+border: solid 1px #f8a156;
+}
+
+.add-new.selected {
+background-color: #fee189;
+border: solid 1px #f8a156;
 }
 
 .search-toggle-container {
@@ -681,5 +728,18 @@ border : none;
 
 .cancel-button:focus{
     outline : none;
+}
+
+.errorMessage {
+width: 449px;
+height: 16px;
+font-family: "Segoe UI", "Helvetica Neue", "HelveticaNeue", Helvetica, "Lucida Sans Unicode", Arial, Sans-serif;
+font-size: 12px;
+line-height: 1.33;
+color: #c81a00 ;
+margin-left: 20px;
+margin-top: 3px;
+position: absolute;
+top: 82px;
 }
     
