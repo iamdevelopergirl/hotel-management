@@ -12,6 +12,7 @@ const initialState = {
   user: null,
   token: null,
 };
+
 const reducer = (state, action) => {
   switch (action.type) {
     case "LOGIN":
@@ -48,7 +49,7 @@ function App() {
       <HotelInfo/>
       {/* <div className="App-header">
         <Header/>
-        <div className="App">{!state.isAuthenticated ? <Login/> : <Main />}</div>
+        <div className="App">{!state.isAuthenticated ? <Login/> : <Main emailId={state.user}/>}</div>
       </div> */}
     </div>
     </AuthContext.Provider>
