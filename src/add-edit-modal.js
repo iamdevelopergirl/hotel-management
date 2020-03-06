@@ -5,6 +5,7 @@ import { Upload } from '@progress/kendo-react-upload';
 import {isNil} from './utils.js';
 import './styles/add-edit-modal.css';
 import AddressLogo from './images/ic-modal-addresses.svg';
+import axios from 'axios';
 
 class CustomListItemUI extends React.Component {
     render() {
@@ -26,10 +27,13 @@ export default class AddEditModal extends React.Component{
             hotelNameError : "",
             cityError : "",
             stateError : "",
-            showError : false
+            showError : false,
+            selectedFile : null
         }
         this._onClickSave = this._onClickSave.bind(this);
         this._onClickCancel = this._onClickCancel.bind(this);
+        this._fileSelectHandler = this._fileSelectHandler.bind(this);
+        this._fileUploadHandler = this._fileUploadHandler.bind(this);
     }
 
     _showErrorMessage() {
@@ -96,6 +100,17 @@ export default class AddEditModal extends React.Component{
         return errorState;
     }
 
+    _fileSelectHandler(event){
+        console.log(event.target.files[0]);
+        this.setState({
+            selectedFile : event.target.files[0]
+        });
+    }
+
+    _fileUploadHandler(){
+
+    }
+
     render(){
         let tempObj = {};
         if(Object.keys(this.props.modalData).length !== 0){
@@ -140,14 +155,12 @@ export default class AddEditModal extends React.Component{
                         
                         <div className="column address-image">
                         <div className="name-container margin-left-3">Upload Photos</div>
-                        <Upload batch={true} multiple={true} defaultFiles={[]} withCredentials={false}
-                        restrictions={{
-                            allowedExtensions: [ '.jpg', '.png' ],
-                            maxFileSize: 4000000
-                        }} 
-                        listItemUI={CustomListItemUI}
-                        saveUrl={'https://demos.telerik.com/kendo-ui/service-v4/upload/save'}
-                        removeUrl={'https://demos.telerik.com/kendo-ui/service-v4/upload/remove'}/>
+                            <input type="file" onChange={this._fileSelectHandler} 
+                            style={{display : "none"}}
+                            ref={fileInput => this.fileInput = fileInput}
+                            accept=".png, .jpg, .jpeg, .svg"/> 
+                            <button className="choose-file" onClick={() => this.fileInput.click()}>Choose a file</button>
+                            <button className="upload-file" onClick={this._fileUploadHandler}>Upload</button>
                         </div>
                     </div>
                     <div className="btn-container">

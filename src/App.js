@@ -38,7 +38,7 @@ const reducer = (state, action) => {
 
 function App() {
   const [state, dispatch] = React.useReducer(reducer, initialState);
-
+  console.log(state);
   return (
     <AuthContext.Provider
       value={{
@@ -46,12 +46,7 @@ function App() {
         dispatch
       }}>
     <div className="App">
-      {/* <Login/> */}
-      <HotelInfo/>
-      {/* <div className="App-header">
-        <Header/>
-        <div className="App">{!state.isAuthenticated ? <Login/> : <Main emailId={state.user}/>}</div>
-      </div> */}
+      <div className="App">{state.isAuthenticated ? <Login/> : <Main emailId={state.user}/>}</div>
     </div>
     </AuthContext.Provider>
   );

@@ -1,0 +1,38 @@
+
+.navigation {
+    width: 100%;
+    height: fit-content;
+    margin-top: 47px;
+}
+
+ul {
+list-style-type: none;
+margin: 0;
+padding: 0;
+overflow: hidden;
+}
+
+li {
+float: left;
+border : 1px solid #ffd664;
+border-radius: 10px;
+background-color: #f08216;
+}
+
+li a {
+display: block;
+color:white;
+text-align: center;
+padding: 16px;
+text-decoration: none;
+}
+
+li:hover{
+    background-color: #f08216;
+    border: solid 1px #f8a156;
+}
+
+.to-center{
+    margin-left: 200px;
+    margin-right: 200px;
+}

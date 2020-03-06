@@ -7,14 +7,6 @@ import logo from './images/hotel-img.jpeg';
 import ModalContainer from './modal-container.js';
 import {isNil, isEmptyObject} from './utils.js';
 
-const mockItems = 
-    [{"1" : { "name" : "elakya" , title : "elakya", city : "tirupur", state : "tamilnadu", image: logo}},
-     {"2" : { "name" : "elakya" , title : "elakya", city : "tirupur", state : "tamilnadu", image: logo}},
-     {"3" : { "name" : "elakya" , title : "elakya", city : "tirupur", state : "tamilnadu", image: logo}},
-     {"4" : { "name" : "elakya" , title : "elakya", city : "tirupur", state : "tamilnadu", image: logo}},
-     {"5" : { "name" : "elakya" , title : "elakya", city : "tirupur", state : "tamilnadu", image: logo}},
-     {"6" : { "name" : "elakya" , title : "elakya", city : "tirupur", state : "tamilnadu", image: logo}}
-    ];
 
 class HotelInfo extends React.Component{
     constructor(props){
@@ -27,7 +19,7 @@ class HotelInfo extends React.Component{
             modalData : {},
             mainContainerStyle: {},
             preventSetState : false,
-            hotelItems : mockItems,
+            hotelItems : this.props.hotelItems,
             modalKey : ""
         }
         this._handleScroll = this._handleScroll.bind(this);
@@ -52,7 +44,9 @@ class HotelInfo extends React.Component{
             else{
                 this._updateHotelItem(objToUpdate, payload.searchKey);
             }
-        }  
+        }
+        //localStorage.setItem("hotelItems", JSON.stringify(this.state.hotelItems)); 
+        this.props.updateItems() 
     }
 
     _addHotelItem(objToUpdate){
@@ -153,8 +147,20 @@ class HotelInfo extends React.Component{
         }
       }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState({ hotelItems: nextProps.hotelItems });  
+    }
+
     componentDidMount(){
         window.addEventListener("scroll", this._handleScroll);
+        // let stringifiedHotelItems = localStorage.getItem("hotelItems");
+        // if(isNil(stringifiedHotelItems)){
+        //     localStorage.setItem("hotelItems", JSON.stringify(this.state.hotelItems));
+        // }
+        // else{
+        //     let hotelItems = JSON.parse(stringifiedHotelItems);
+        //     this.setState({hotelItems : hotelItems});
+        // } 
     }
 
     componentWillUnmount() {

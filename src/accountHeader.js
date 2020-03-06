@@ -8,16 +8,17 @@ class AccountHeader extends React.Component{
         this.state = {
             showSignOutPopup:false
         };
+        this.hidePopup = this.hidePopup.bind(this);
     }
 
     componentDidMount() {
         // Hide popup on click outside the block
-        window.addEventListener('click', this.hidePopup.bind(this), false);
+        window.addEventListener('click', this.hidePopup, false);
     }
     
     componentWillUnmount() {
         // Remove click event listener on component unmount
-        window.removeEventListener('click', this.hidePopup.bind(this), false);
+        window.removeEventListener('click', this.hidePopup, false);
     }
 
     hidePopup() {

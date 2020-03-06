@@ -60,6 +60,7 @@ function Login(){
       };
 
     return (
+      <div className="App-header">
         <div className="login-container">
             <div className="input-container">
                 <FontAwesomeIcon icon={faUser} className="icon"/>
@@ -78,6 +79,7 @@ function Login(){
             <div className="privacy-footer">
             </div>
         </div>
+      </div>
     )
 }
 export default Login;
