@@ -37,7 +37,9 @@ export class ItemsTileView extends React.Component {
     render() {
       return ( 
           <div className="items-tile-view">
-            {this.props.items.map((item, index) => <HotelTile key={item.id} item={item} itemIndex={index} performAction={this.props.performAction} stopPropagation={this.props.stopPropagation}/>)}
+            {this.props.items.map((item, index) => 
+                <HotelTile key={Object.keys(item)[0]} itemKey={Object.keys(item)[0]} item={item[Object.keys(item)[0]]} itemIndex={index} performAction={this.props.performAction} stopPropagation={this.props.stopPropagation}/>
+            )}
           </div>
         );
     }
@@ -51,7 +53,8 @@ export class ItemsListView extends React.Component {
     render(){
         return(
             <div className="items-list-view">
-                {this.props.items.map((item, index) => <HotelList key={item.id} item={item} performAction={this.props.performAction}/>)}
+                {this.props.items.map((item, index) =>
+                    <HotelList key={Object.keys(item)[0]} itemKey={Object.keys(item)[0]} item={item[Object.keys(item)[0]]} performAction={this.props.performAction}/>)}
             </div>
         )
     }

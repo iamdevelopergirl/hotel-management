@@ -28,11 +28,11 @@ export default class HotelList extends React.Component{
     }
 
     _callEdit(){
-        this.props.performAction("Edit", this.props.item.id);
+        this.props.performAction("Edit", this.props.itemKey);
     }
 
     _callDelete(){
-        this.props.performAction("Delete", this.props.item.id,); 
+        this.props.performAction("Delete", this.props.itemKey); 
     }
 
     render(){

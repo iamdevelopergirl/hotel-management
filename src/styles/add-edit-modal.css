@@ -40,6 +40,6 @@ background-color: #ffffff;
 box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.15);
 }
 
-.item-image[src*="address"],.item-image[src*="login"],.item-image[src*="notes"] {
+.item-image[src*="address"] {
 padding-top:20px;
 }

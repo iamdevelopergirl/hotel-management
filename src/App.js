@@ -46,6 +46,7 @@ function App() {
         dispatch
       }}>
     <div className="App">
+      {/* <Login/> */}
       <HotelInfo/>
       {/* <div className="App-header">
         <Header/>

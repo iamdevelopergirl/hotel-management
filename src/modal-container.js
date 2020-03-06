@@ -13,10 +13,10 @@ export default class ModalContainer extends React.Component{
         let style = {};
         switch(this.props.toDisplay){
             case "Edit":
-                view = <AddEditModal modalData={this.props.modalData} handleModal={this.props.handleModal}/>;
+                view = <AddEditModal modalKey={this.props.modalKey} modalData={this.props.modalData} handleModal={this.props.handleModal}/>;
                 break;
             case "Delete":
-                view = <DeleteConfirmation handleModal={this.props.handleModal}/>
+                view = <DeleteConfirmation modalKey={this.props.modalKey} handleModal={this.props.handleModal}/>
                 style = {'height': 719};
                 break;
         }

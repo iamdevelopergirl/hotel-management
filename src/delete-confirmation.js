@@ -9,7 +9,11 @@ export default class DeleteConfirmation extends React.Component{
     }
 
     _onDeleteClick(){
-        this.props.handleModal();
+        let payload = {
+            searchKey : this.props.modalKey,
+            modalData : {}
+        }
+        this.props.handleModal(payload);
     }
 
     _onCancelClick(){

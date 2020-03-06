@@ -47,6 +47,7 @@ export default class AddEditModal extends React.Component{
     }
 
     _onClickSave(){
+        let id = this.props.modalKey || "0";
         let addObj = {
             title : this.titleInput.state.values,
             name : this.name.state.values,
@@ -61,8 +62,11 @@ export default class AddEditModal extends React.Component{
             this._showErrorMessage();
             return;
         }
-        
-        this.props.handleModal();
+        let payload = {
+            searchKey : id,
+            modalData : addObj
+        }
+        this.props.handleModal(payload);
     }
 
     _performValidation(addObj) {
@@ -111,28 +115,28 @@ export default class AddEditModal extends React.Component{
                 </div>
                 <div className="hotel-form">
                     <div className="row auto-margin">
-                        <div className="address-title"><TextInput name="Hotel Title"  ref={(input) => { this.titleInput = input; }} values={tempObj.name} maxLength="25" autofocus onMaxLengthReached={()=>{this._focusNextField('name')}}/></div>
+                        <div className="address-title"><TextInput name="Hotel Title"  ref={(input) => { this.titleInput = input; }} values={tempObj.title} maxLength="25" autofocus onMaxLengthReached={()=>{this._focusNextField('name')}}/></div>
                         <div className="hotel-name"><TextInput name="Hotel Name"  ref={(input) => { this.name = input; }} 
                         values={tempObj.name} maxLength="256" 
                         onMaxLengthReached={()=>{this._focusNextField('address1Input')}}
                         errorMessage={this.state.hotelNameError}/></div>
                     </div>
                     <div className="row auto-margin">
-                        <div className="contact-address"><TextInput name="Address Line 1"  ref={(input) => { this.address1Input = input; }} values={tempObj.address} maxLength="256"  onMaxLengthReached={()=>{this._focusNextField('address2Input')}}/></div>
-                        <div className="contact-address"><TextInput name="Address Line 2"  ref={(input) => { this.address2Input = input; }} values={tempObj.address} maxLength="256" onMaxLengthReached={()=>{this._focusNextField('cityInput')}}/></div>
+                        <div className="contact-address"><TextInput name="Address Line 1"  ref={(input) => { this.address1Input = input; }} values={tempObj.address1} maxLength="256"  onMaxLengthReached={()=>{this._focusNextField('address2Input')}}/></div>
+                        <div className="contact-address"><TextInput name="Address Line 2"  ref={(input) => { this.address2Input = input; }} values={tempObj.address2} maxLength="256" onMaxLengthReached={()=>{this._focusNextField('cityInput')}}/></div>
                     </div>
                     <div className="row auto-margin">
                         <div className="contact-city"><TextInput name="City" maxLength="25" ref={(input) => { this.cityInput = input;}} 
-                        values={tempObj.address} 
+                        values={tempObj.city} 
                         onMaxLengthReached={()=>{this._focusNextField('stateInput')}}
                         errorMessage={this.state.cityError}/></div>
                         <div className="contact-state"><TextInput name= "State" maxLength="25" ref={(input) => { this.stateInput = input;}} 
-                        values={tempObj.address} 
+                        values={tempObj.state} 
                         onMaxLengthReached={()=>{this._focusNextField('postalInput')}}
                         errorMessage={this.state.stateError}/></div>
                     </div>
                     <div className="row auto-margin">
-                        <div className="contact-postal"><TextInput name="Postal Code" maxLength="6" ref={(input) => { this.postalInput = input;}} values={tempObj.id} onMaxLengthReached={()=>{this._focusNextField('savebutton')}}/></div>
+                        <div className="contact-postal"><TextInput name="Postal Code" maxLength="6" ref={(input) => { this.postalInput = input;}} values={tempObj.pincode} onMaxLengthReached={()=>{this._focusNextField('savebutton')}}/></div>
                         
                         <div className="column address-image">
                         <div className="name-container margin-left-3">Upload Photos</div>

@@ -6,43 +6,15 @@ import ItemsView from './item-view.js';
 import logo from './images/hotel-img.jpeg';
 import ModalContainer from './modal-container.js';
 import {isNil, isEmptyObject} from './utils.js';
+
 const mockItems = 
-    [{
-        id : "1",
-        name : "Hotel1",
-        address : "Hotel1 Adreess",
-        image : logo
-    },
-    {
-        id : "2",
-        name : "Hotel2",
-        address : "Hotel2 Adreess",
-        image : logo
-    },
-    {
-        id : "3",
-        name : "Hotel3",
-        address : "Hotel3 Adreess",
-        image : logo
-    },
-    {
-        id : "4",
-        name : "Hotel4",
-        address : "Hotel4 Adreess",
-        image : logo
-    },
-    {
-        id : "5",
-        name : "Hotel4",
-        address : "Hotel4 Adreess",
-        image : logo
-    },
-    {
-        id : "6",
-        name : "Hotel4",
-        address : "Hotel4 Adreess",
-        image : logo
-    }];
+    [{"1" : { "name" : "elakya" , title : "elakya", city : "tirupur", state : "tamilnadu", image: logo}},
+     {"2" : { "name" : "elakya" , title : "elakya", city : "tirupur", state : "tamilnadu", image: logo}},
+     {"3" : { "name" : "elakya" , title : "elakya", city : "tirupur", state : "tamilnadu", image: logo}},
+     {"4" : { "name" : "elakya" , title : "elakya", city : "tirupur", state : "tamilnadu", image: logo}},
+     {"5" : { "name" : "elakya" , title : "elakya", city : "tirupur", state : "tamilnadu", image: logo}},
+     {"6" : { "name" : "elakya" , title : "elakya", city : "tirupur", state : "tamilnadu", image: logo}}
+    ];
 
 class HotelInfo extends React.Component{
     constructor(props){
@@ -54,7 +26,9 @@ class HotelInfo extends React.Component{
             preventSetState : false,
             modalData : {},
             mainContainerStyle: {},
-            preventSetState : false
+            preventSetState : false,
+            hotelItems : mockItems,
+            modalKey : ""
         }
         this._handleScroll = this._handleScroll.bind(this);
         this._handleSwitchViewType = this._handleSwitchViewType.bind(this);
@@ -63,26 +37,57 @@ class HotelInfo extends React.Component{
         this._onAddNewClicked = this._onAddNewClicked.bind(this);
     }
 
-    _handleModal(){
+    _handleModal(payload){
         this.setState({
             showModal : false
-        })
+        });
+        if(!isNil(payload)){
+            let objToAddOrUpdate = this.state.hotelItems.find((item) => {
+                return Object.keys(item)[0] === payload.searchKey
+            });
+            let objToUpdate = { [payload.searchKey] : payload.modalData};
+            if(isNil(objToAddOrUpdate)){
+                this._addHotelItem(objToUpdate);
+            }
+            else{
+                this._updateHotelItem(objToUpdate, payload.searchKey);
+            }
+        }  
+    }
+
+    _addHotelItem(objToUpdate){
+        this.state.hotelItems.push(objToUpdate);
+        this.setState({
+            hotelItems : this.state.hotelItems
+        });
+    }
+
+    _updateHotelItem(objToUpdate, searchKey){
+        let indexToUpdate = this.state.hotelItems.map((item, index) => [index, item]).find((item) => Object.keys(item[1])[0] == searchKey)[0];
+        if(isEmptyObject(objToUpdate[searchKey])){
+            this.state.hotelItems.splice(indexToUpdate, 1);
+        }
+        else{
+            this.state.hotelItems[indexToUpdate] = objToUpdate;
+        }
+        
+        this.setState({
+            hotelItems : this.state.hotelItems
+        });
     }
 
     _showModal(modalType, id = null) {
         let tempData = {};
         if(!isNil(id)){
-            for(let i in mockItems){
-                if(mockItems[i].id === id){
-                    tempData = mockItems[i];
-                break;  
-            }
-            }
+            tempData = this.state.hotelItems.find((item) => {
+                    return Object.keys(item)[0] === id
+            });
             this.setState({
                 showModal: true,
                 toDisplayModal: modalType,
                 preventSetState: false,
-                modalData : tempData
+                modalData : tempData[id],
+                modalKey : id
             });
         }
         else{
@@ -159,11 +164,11 @@ class HotelInfo extends React.Component{
     render(){
         let itemsView = "";
         const background = (this.state.selectedViewType === "TileView") ? 'content-container--greybg' : 'content-container--whitebg';
-        itemsView = (<ItemsView viewType={this.state.selectedViewType} items={mockItems} performAction={this._performAction}/>);
+        itemsView = (<ItemsView viewType={this.state.selectedViewType} items={this.state.hotelItems} performAction={this._performAction}/>);
     return(
         <div>
             {
-                this.state.showModal ? <ModalContainer toDisplay={this.state.toDisplayModal} modalData={this.state.modalData} handleModal={this._handleModal}/> : null
+                this.state.showModal ? <ModalContainer toDisplay={this.state.toDisplayModal} modalData={this.state.modalData} modalKey={this.state.modalKey} handleModal={this._handleModal}/> : null
             }
             <AccountHeader email="elakya" showPopup/>
             <div className="main-container" style={this.state.mainContainerStyle}>

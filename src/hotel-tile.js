@@ -32,11 +32,11 @@ export default class HotelTile extends React.Component{
     }
 
     _callEdit(){
-        this.props.performAction("Edit", this.props.item.id);
+        this.props.performAction("Edit", this.props.itemKey);
     }
 
     _callDelete(){
-        this.props.performAction("Delete", this.props.item.id); 
+        this.props.performAction("Delete", this.props.itemKey); 
     }
 
     render(){
@@ -46,7 +46,7 @@ export default class HotelTile extends React.Component{
         }
 
         return(
-            <div className={hotelItemClass} id={this.props.item.id}>
+            <div className={hotelItemClass} id={this.props.itemKey}>
                 <div className="tile-container" onClick={this._handleContainerClick.bind(this)}>
                     <div className="logo-container">
                         <img src={this.props.item.image} className="tile-icon"></img>
