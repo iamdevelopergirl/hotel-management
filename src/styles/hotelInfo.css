@@ -637,7 +637,7 @@ width:470px;
 }
 
 .contact-city, .contact-postal,
-.contact-address, .contact-state, .address-image {
+.contact-address, .contact-state, .address-image, .contact-image {
 margin-left: 16px;
 width: 470px;
 display: inline-block;
@@ -742,4 +742,3 @@ margin-top: 3px;
 position: absolute;
 top: 82px;
 }
-    

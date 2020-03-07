@@ -4,6 +4,9 @@ import { AuthContext } from "./App";
 import logo from './images/hotel-img.jpeg';
 import './styles/Login.css';
 import Pagination from './pagination.js';
+import axios from 'axios';
+import {HotelAPI} from './utils.js';
+import {Spinner} from './spinner.js';
 
 const initialState = {
     hotelItems: [],
@@ -41,41 +44,42 @@ export const Main = ({emailId}) => {
     const { state: authState } = React.useContext(AuthContext);
     const [state, dispatch] = React.useReducer(reducer, initialState);
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(4);
+    const [itemsPerPage] = useState(8);
     const [updateCount, setUpdateCount] = useState(0);
+    const [uploading, setUploading] = useState(false);
+
+    const {
+      url,
+      headers,
+      param
+    } = HotelAPI(authState.token);
 
     React.useEffect(() => {
         dispatch({
           type: "FETCH_ITEMS_REQUEST"
         });
 
-        fetch("https://jsonplaceholder.typicode.com/posts", {
+        axios.get("/hotels", {
           // headers: {
           //   Authorization: `Bearer ${authState.token}`
           // }
         })
-          .then(res => {
-            if (res.ok) {
-              return res.json();
-            } else {
-              throw res;
-            }
-          })
           .then(resJson => {
+            console.log(resJson);
             const mockItems = 
-    [{"1" : { "name" : "elakya1" , "title" : "elakya", "city" : "tirupur", "state" : "tamilnadu", "image": logo}},
-     {"2" : { "name" : "elakya2" , "title" : "elakya", "city" : "tirupur", "state" : "tamilnadu", "image": logo}},
-     {"3" : { "name" : "elakya3" , "title" : "elakya", "city" : "tirupur", "state" : "tamilnadu", "image": logo}},
-     {"4" : { "name" : "elakya4" , "title" : "elakya", "city" : "tirupur", "state" : "tamilnadu", "image": logo}},
-     {"5" : { "name" : "elakya5" , "title" : "elakya", "city" : "tirupur", "state" : "tamilnadu", "image": logo}},
-     {"6" : { "name" : "elakya6" , "title" : "elakya", "city" : "tirupur", "state" : "tamilnadu", "image": logo}},
-     {"7" : { "name" : "elakya7" , "title" : "elakya", "city" : "tirupur", "state" : "tamilnadu", "image": logo}},
-     {"8" : { "name" : "elakya8" , "title" : "elakya", "city" : "tirupur", "state" : "tamilnadu", "image": logo}},
-     {"9" : { "name" : "elakya9" , "title" : "elakya", "city" : "tirupur", "state" : "tamilnadu", "image": logo}},
-     {"10" : { "name" : "elakya10" , "title" : "elakya", "city" : "tirupur", "state" : "tamilnadu", "image": logo}},
-     {"11" : { "name" : "elakya11" , "title" : "elakya", "city" : "tirupur", "state" : "tamilnadu", "image": logo}},
-     {"12" : { "name" : "elakya12" , "title" : "elakya", "city" : "tirupur", "state" : "tamilnadu", "image": logo}},
-     {"13" : { "name" : "elakya13" , "title" : "elakya", "city" : "tirupur", "state" : "tamilnadu", "image": logo}}
+    [{"1" : { "name" : "elakya1" , "phoneNumber" : 12312321, "city" : "tirupur",  "image": logo}},
+     {"2" : { "name" : "elakya2" , "phoneNumber" : 12312321, "city" : "tirupur",  "image": logo}},
+     {"3" : { "name" : "elakya3" , "phoneNumber" : 12312321, "city" : "tirupur",  "image": logo}},
+     {"4" : { "name" : "elakya4" , "phoneNumber" : 12312321, "city" : "tirupur",  "image": logo}},
+     {"5" : { "name" : "elakya5" , "phoneNumber" : 12312321, "city" : "tirupur",  "image": logo}},
+     {"6" : { "name" : "elakya6" , "phoneNumber" : 12312321, "city" : "tirupur",  "image": logo}},
+     {"7" : { "name" : "elakya7" , "phoneNumber" : 12312321, "city" : "tirupur",  "image": logo}},
+     {"8" : { "name" : "elakya8" , "phoneNumber" : 12312321, "city" : "tirupur",  "image": logo}},
+     {"9" : { "name" : "elakya9" , "phoneNumber" : 12312321, "city" : "tirupur",  "image": logo}},
+     {"10" : { "name" : "elakya10" , "phoneNumber" : 12312321, "city" : "tirupur",  "image": logo}},
+     {"11" : { "name" : "elakya11" , "phoneNumber" : 12312321, "city" : "tirupur",  "image": logo}},
+     {"12" : { "name" : "elakya12" , "phoneNumber" : 12312321, "city" : "tirupur",  "image": logo}},
+     {"13" : { "name" : "elakya13" , "phoneNumber" : 12312321, "city" : "tirupur",  "image": logo}}
     ];
             dispatch({
               type: "FETCH_ITEMS_SUCCESS",
@@ -105,10 +109,9 @@ export const Main = ({emailId}) => {
 
     return (
         <div>
-            {state.isFetching ? ( <span className="App-header">LOADING...</span> ) : state.hasError ? ( <span className="App-header">AN ERROR HAS OCCURED</span> ) : 
+            {state.isFetching ? ( <Spinner/> ) : state.hasError ? ( <span className="App-header">AN ERROR HAS OCCURED</span> ) : 
             ( <div> 
-              <HotelInfo hotelItems={currentItem} emailId={emailId} updateItems={updateItems}/>
-              <Pagination itemsPerPage={itemsPerPage} totalItems={state.hotelItems.length} paginate={paginate}/> 
+              <HotelInfo hotelItems={currentItem} emailId={emailId} updateItems={updateItems} token={authState.token} uploading={uploading} itemsPerPage={itemsPerPage} totalItems={state.hotelItems.length} paginate={paginate}/> 
              </div> )}
         </div>
     )

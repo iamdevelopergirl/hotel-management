@@ -9,3 +9,17 @@ export function isEmptyObject(obj){
         return true;
     }
 }
+
+export function HotelAPI(authorizationToken, paramId){
+    let url = "api/hotels";
+    let headers = {
+        Authorization : authorizationToken
+    };
+    let params = {}
+    if(!isNil(paramId)){
+        params = {
+            hotelId : paramId
+        }
+    }
+    return {url, headers, params};
+}

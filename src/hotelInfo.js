@@ -5,7 +5,10 @@ import {ListViewToggle, TileViewToggle} from './view-toggle.js';
 import ItemsView from './item-view.js';
 import logo from './images/hotel-img.jpeg';
 import ModalContainer from './modal-container.js';
-import {isNil, isEmptyObject} from './utils.js';
+import {isNil, isEmptyObject, HotelAPI} from './utils.js';
+import axios from 'axios';
+import {Spinner} from './spinner.js';
+import Pagination from './pagination.js';
 
 
 class HotelInfo extends React.Component{
@@ -20,7 +23,8 @@ class HotelInfo extends React.Component{
             mainContainerStyle: {},
             preventSetState : false,
             hotelItems : this.props.hotelItems,
-            modalKey : ""
+            modalKey : "",
+            uploading : this.props.uploading
         }
         this._handleScroll = this._handleScroll.bind(this);
         this._handleSwitchViewType = this._handleSwitchViewType.bind(this);
@@ -34,40 +38,77 @@ class HotelInfo extends React.Component{
             showModal : false
         });
         if(!isNil(payload)){
+            this.setState({
+                uploading : true
+            });
             let objToAddOrUpdate = this.state.hotelItems.find((item) => {
                 return Object.keys(item)[0] === payload.searchKey
             });
-            let objToUpdate = { [payload.searchKey] : payload.modalData};
             if(isNil(objToAddOrUpdate)){
-                this._addHotelItem(objToUpdate);
+                this._addHotelItem(payload.modalData);
             }
             else{
-                this._updateHotelItem(objToUpdate, payload.searchKey);
+                this._updateHotelItem(payload.modalData, payload.searchKey);
             }
         }
-        //localStorage.setItem("hotelItems", JSON.stringify(this.state.hotelItems)); 
-        this.props.updateItems() 
     }
 
     _addHotelItem(objToUpdate){
-        this.state.hotelItems.push(objToUpdate);
-        this.setState({
-            hotelItems : this.state.hotelItems
+        const {
+                url,
+                headers,
+                param
+            } = HotelAPI(this.props.token);
+        axios.post(url, {headers, param, objToUpdate})
+          .then(res => {
+            if(res.status == 200){
+                // this.setState({
+                //     uploading: false
+                // });
+                this.props.updateItems();
+            }
         });
+        // this.state.hotelItems.push(objToUpdate);
+        // this.setState({
+        //     hotelItems : this.state.hotelItems
+        // });
     }
 
     _updateHotelItem(objToUpdate, searchKey){
-        let indexToUpdate = this.state.hotelItems.map((item, index) => [index, item]).find((item) => Object.keys(item[1])[0] == searchKey)[0];
-        if(isEmptyObject(objToUpdate[searchKey])){
-            this.state.hotelItems.splice(indexToUpdate, 1);
+        const {
+            url,
+            headers,
+            param
+        } = HotelAPI(this.props.token, searchKey);
+
+        if(isEmptyObject(objToUpdate)){
+            axios.delete(url, {headers, param})
+            .then(res => {
+                if(res.status == 200){
+                    this.props.updateItems();
+                }
+            });
         }
         else{
-            this.state.hotelItems[indexToUpdate] = objToUpdate;
+            axios.post(url, {headers, param, objToUpdate})
+            .then(res => {
+                if(res.status == 200){
+                    this.props.updateItems();
+                }
+            });
         }
         
-        this.setState({
-            hotelItems : this.state.hotelItems
-        });
+        // let indexToUpdate = this.state.hotelItems.map((item, index) => [index, item]).find((item) => Object.keys(item[1])[0] == searchKey)[0];
+        // if(isEmptyObject(objToUpdate[searchKey])){
+        //     this.state.hotelItems.splice(indexToUpdate, 1);
+        // }
+        // else{
+        //     this.state.hotelItems[indexToUpdate] = objToUpdate;
+        // }
+        
+        // this.setState({
+        //     hotelItems : this.state.hotelItems
+        // });
     }
 
     _showModal(modalType, id = null) {
@@ -168,6 +209,11 @@ class HotelInfo extends React.Component{
     }
 
     render(){
+        const { uploading } = this.state;
+        switch(true){
+            case uploading:
+                return <Spinner />
+        }
         let itemsView = "";
         const background = (this.state.selectedViewType === "TileView") ? 'content-container--greybg' : 'content-container--whitebg';
         itemsView = (<ItemsView viewType={this.state.selectedViewType} items={this.state.hotelItems} performAction={this._performAction}/>);
@@ -219,6 +265,7 @@ class HotelInfo extends React.Component{
                     {itemsView}
                 </div>
             </div>
+            <Pagination itemsPerPage={this.props.itemsPerPage} totalItems={this.props.totalItems} paginate={this.props.paginate}/>
         </div>
     );
     }
