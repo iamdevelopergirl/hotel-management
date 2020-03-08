@@ -2,6 +2,7 @@ import React from 'react';
 import './styles/hotelInfo.css';
 import tileViewSettingsIcon from './images/ic-hotels-grid-settings.svg';
 import gridViewSettingsIcon from './images/ic-tab-ui-setting.svg';
+import activeSettingsIcon from './images/ic-tab-ui-setting-active.svg';
 
 
 export class Settings extends React.Component {
@@ -35,7 +36,7 @@ export class Settings extends React.Component {
   
   
     render() {
-      let path = this.state.showOptions ? './images/ic-tab-ui-setting-active.svg' : this.props.tileView ?  tileViewSettingsIcon : gridViewSettingsIcon
+      let path = this.state.showOptions ? activeSettingsIcon : this.props.tileView ?  tileViewSettingsIcon : gridViewSettingsIcon
       return(
         <div ref={(component) => { this.component = component; }} onClick={this._handleSettingsClick}>
           <img src={path} className="settings"/>

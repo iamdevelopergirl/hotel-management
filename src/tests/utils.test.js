@@ -1,4 +1,4 @@
-import {isNil, isEmptyObject, isFormDataObject} from '../utils.js';
+import {isNil, isEmptyObject, isFormDataObject, isString} from '../utils.js';
 
 it("should return correct value for isNil", ()=>{
     let ret = isNil(null);
@@ -53,5 +53,25 @@ it("should return correct value for isFormDataObject", ()=>{
 
     let formdata = new FormData();
     ret = isFormDataObject(formdata);
+    expect(ret).toBe(true);
+});
+
+it("should return correct value for isString", ()=>{
+    let ret = isString(null);
+    expect(ret).toBe(false);
+
+    ret = isString(undefined);
+    expect(ret).toBe(false);
+
+    ret = isString();
+    expect(ret).toBe(false);
+
+    ret = isString({});
+    expect(ret).toBe(false);
+
+    ret = isString({"1" : "1"});
+    expect(ret).toBe(false);
+
+    ret = isString("formdata");
     expect(ret).toBe(true);
 });
