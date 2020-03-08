@@ -20,7 +20,6 @@ export default class DeleteConfirmation extends React.Component{
         this.props.handleModal();
     }
 
-
     render(){
         return(
             <div className="delete">

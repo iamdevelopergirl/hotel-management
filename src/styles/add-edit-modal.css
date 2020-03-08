@@ -61,3 +61,17 @@ padding-top:20px;
     max-width: 200px;
 
 }
+
+.error-message {
+    font-family: "Segoe UI", "Helvetica Neue", "HelveticaNeue", Helvetica, "Lucida Sans Unicode", Arial, Sans-serif;
+    font-size: 12px;
+    line-height: 1.33;
+    color: #c81a00 ;
+}
+
+.upload-message{
+    font-family: "Segoe UI", "Helvetica Neue", "HelveticaNeue", Helvetica, "Lucida Sans Unicode", Arial, Sans-serif;
+    font-size: 14px;
+    line-height: 1.33;
+    color: black ;
+}

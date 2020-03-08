@@ -5,7 +5,7 @@ import {ListViewToggle, TileViewToggle} from './view-toggle.js';
 import ItemsView from './item-view.js';
 import logo from './images/hotel-img.jpeg';
 import ModalContainer from './modal-container.js';
-import {isNil, isEmptyObject, HotelAPI} from './utils.js';
+import {isNil, isEmptyObject, HotelAPI, isFormDataObject} from './utils.js';
 import axios from 'axios';
 import {Spinner} from './spinner.js';
 import Pagination from './pagination.js';
@@ -95,7 +95,7 @@ class HotelInfo extends React.Component{
             param
         } = HotelAPI(this.props.token, searchKey);
 
-        if(!objToUpdate.has("name")){
+        if(!isFormDataObject(objToUpdate)){
             axios.delete(`/api/hotel/${searchKey}`)
             .then(res => {
                 if(res.status == 200){
