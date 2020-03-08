@@ -11,7 +11,7 @@ export function isEmptyObject(obj){
 }
 
 export function HotelAPI(authorizationToken, paramId){
-    let url = "api/hotels";
+    let url = "/api/hotel";
     let headers = {
         Authorization : authorizationToken
     };

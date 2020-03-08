@@ -59,13 +59,21 @@ export const Main = ({emailId}) => {
           type: "FETCH_ITEMS_REQUEST"
         });
 
-        axios.get("/hotels", {
+        axios.get("/api/hotels", {
           // headers: {
           //   Authorization: `Bearer ${authState.token}`
           // }
         })
           .then(resJson => {
             console.log(resJson);
+            let newHotelItems = []
+            if(resJson.data.length !== 0){
+              resJson.data.map((item) => {
+                let itemId = item.id;
+                let newObj = { [itemId] : item}
+                newHotelItems.push(newObj);
+              });
+            }
             const mockItems = 
     [{"1" : { "name" : "elakya1" , "phoneNumber" : 12312321, "city" : "tirupur",  "image": logo}},
      {"2" : { "name" : "elakya2" , "phoneNumber" : 12312321, "city" : "tirupur",  "image": logo}},
@@ -83,7 +91,7 @@ export const Main = ({emailId}) => {
     ];
             dispatch({
               type: "FETCH_ITEMS_SUCCESS",
-              payload: mockItems
+              payload: newHotelItems
             });
           })
           .catch(error => {
@@ -96,7 +104,7 @@ export const Main = ({emailId}) => {
 
     const indexOfLastItem = currentPage * itemsPerPage; 
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItem = state.hotelItems.slice(indexOfFirstItem, indexOfLastItem);
+    const currentItem = state.hotelItems.length!== 0 ? state.hotelItems.slice(indexOfFirstItem, indexOfLastItem) : 0;
 
     const paginate = (pageNumber) => {
       setCurrentPage(pageNumber);

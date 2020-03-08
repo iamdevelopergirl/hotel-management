@@ -20,3 +20,15 @@
 5. seperate out add-edit-modal-css
 6. Name of the tool
 
+
+
+cloudinary.uploader().upload("sample.jpg",
+     ObjectUtils.asMap("transformation",
+                      new Transformation().crop("limit").tags("samples").width(3000).height(2000))); 
+
+
+                      elakyahotelmanagementapp
+
+
+
+http://localhost:8080/api/hotels - GET

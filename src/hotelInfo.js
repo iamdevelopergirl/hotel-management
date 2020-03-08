@@ -9,6 +9,7 @@ import {isNil, isEmptyObject, HotelAPI} from './utils.js';
 import axios from 'axios';
 import {Spinner} from './spinner.js';
 import Pagination from './pagination.js';
+import {ErrorOccurred} from './error-occurred.js'
 
 
 class HotelInfo extends React.Component{
@@ -24,7 +25,8 @@ class HotelInfo extends React.Component{
             preventSetState : false,
             hotelItems : this.props.hotelItems,
             modalKey : "",
-            uploading : this.props.uploading
+            uploading : this.props.uploading,
+            errorOccurred : false
         }
         this._handleScroll = this._handleScroll.bind(this);
         this._handleSwitchViewType = this._handleSwitchViewType.bind(this);
@@ -41,31 +43,43 @@ class HotelInfo extends React.Component{
             this.setState({
                 uploading : true
             });
-            let objToAddOrUpdate = this.state.hotelItems.find((item) => {
-                return Object.keys(item)[0] === payload.searchKey
-            });
-            if(isNil(objToAddOrUpdate)){
+            if(this.state.hotelItems === 0){
                 this._addHotelItem(payload.modalData);
             }
             else{
-                this._updateHotelItem(payload.modalData, payload.searchKey);
+                let objToAddOrUpdate = this.state.hotelItems.find((item) => {
+                    return Object.keys(item)[0] === payload.searchKey
+                });
+                if(isNil(objToAddOrUpdate)){
+                    this._addHotelItem(payload.modalData);
+                }
+                else{
+                    this._updateHotelItem(payload.modalData, payload.searchKey);
+                }
             }
+            
         }
     }
 
     _addHotelItem(objToUpdate){
-        const {
-                url,
-                headers,
-                param
-            } = HotelAPI(this.props.token);
-        axios.post(url, {headers, param, objToUpdate})
+        // const {
+        //         url,
+        //         headers,
+        //         param
+        //     } = HotelAPI(this.props.token);
+        let data = objToUpdate;
+        axios.post("/api/hotel", data)
           .then(res => {
-            if(res.status == 200){
+            if(res.status == 201){
                 // this.setState({
                 //     uploading: false
                 // });
                 this.props.updateItems();
+            }
+            else{
+                this.setState({
+                    errorOccurred : true
+                });
             }
         });
         // this.state.hotelItems.push(objToUpdate);
@@ -81,19 +95,30 @@ class HotelInfo extends React.Component{
             param
         } = HotelAPI(this.props.token, searchKey);
 
-        if(isEmptyObject(objToUpdate)){
-            axios.delete(url, {headers, param})
+        if(!objToUpdate.has("name")){
+            axios.delete(`/api/hotel/${searchKey}`)
             .then(res => {
                 if(res.status == 200){
                     this.props.updateItems();
                 }
+                else{
+                    this.setState({
+                        errorOccurred : true
+                    });
+                }
             });
         }
         else{
-            axios.post(url, {headers, param, objToUpdate})
+            let data = objToUpdate;
+            axios.put(`/api/hotel/${searchKey}`, data)
             .then(res => {
                 if(res.status == 200){
                     this.props.updateItems();
+                }
+                else{
+                    this.setState({
+                        errorOccurred : true
+                    });
                 }
             });
         }
@@ -209,10 +234,12 @@ class HotelInfo extends React.Component{
     }
 
     render(){
-        const { uploading } = this.state;
+        const { uploading, errorOccurred } = this.state;
         switch(true){
             case uploading:
                 return <Spinner />
+            case errorOccurred:
+                return <ErrorOccurred />;
         }
         let itemsView = "";
         const background = (this.state.selectedViewType === "TileView") ? 'content-container--greybg' : 'content-container--whitebg';

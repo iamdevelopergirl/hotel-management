@@ -1,7 +1,6 @@
 import React from 'react';
 import './styles/hotelInfo.css';
 import {TextInput} from './shared.js';
-import { Upload } from '@progress/kendo-react-upload';
 import {isNil} from './utils.js';
 import './styles/add-edit-modal.css';
 import AddressLogo from './images/ic-modal-addresses.svg';
@@ -25,13 +24,15 @@ class CustomListItemUI extends React.Component {
 export default class AddEditModal extends React.Component{
     constructor(props){
         super(props);
+        this._imageEdited = false;
+        this._modalType = "add";
         this.state = {
             hotelNameError : "",
             addressError : "",
             cityError : "",
             phoneNumberError : "",
             showError : false,
-            selectedFile : null
+            selectedFile : this.props.modalData.image
         }
         this._onClickSave = this._onClickSave.bind(this);
         this._onClickCancel = this._onClickCancel.bind(this);
@@ -60,18 +61,17 @@ export default class AddEditModal extends React.Component{
         formData.append("address1", this.address1Input.state.values);
         formData.append("address2", this.address2Input.state.values);
         formData.append("city", this.cityInput.state.values);
-        formData.append("pincode", this.postalInput.state.values);
-        formData.append("image", this.state.selectedFile);
+        formData.append("postalCode", this.postalInput.state.values);
         formData.append("phoneNumber", this.phoneNumberInput.state.values);
+
+        formData.append("image", this.state.selectedFile);
 
         let id = this.props.modalKey;
         let addObj = {
             name : this.name.state.values,
             address1 : this.address1Input.state.values,
-            address2 : this.address2Input.state.values,
             city : this.cityInput.state.values,
-            pincode : this.postalInput.state.values,
-            phoneNumber : this.phoneNumberInput.state.values
+            phoneNumber : this.phoneNumberInput.state.values,
         }
 
         if(this._performValidation(addObj)){
@@ -125,6 +125,7 @@ export default class AddEditModal extends React.Component{
         this.setState({
             selectedFile : event.target.files[0]
         });
+        this._imageEdited = true;
     }
 
     _fileUploadHandler(){
@@ -135,6 +136,7 @@ export default class AddEditModal extends React.Component{
         let tempObj = {};
         if(Object.keys(this.props.modalData).length !== 0){
             tempObj = this.props.modalData;
+            this._modalType = "edit";
         }
         return(
             <div className="add-edit-form">
@@ -151,39 +153,44 @@ export default class AddEditModal extends React.Component{
                 <div className="hotel-form">
                     <div className="row auto-margin">
                         <div className="hotel-name"><TextInput name="Hotel Name"  autofocus ref={(input) => { this.name = input; }} 
-                        values={tempObj.name} maxLength="256" 
+                        values={isNil(tempObj.name) ? "" : tempObj.name} maxLength="256" 
                         onMaxLengthReached={()=>{this._focusNextField('phoneNumberInput')}}
                         errorMessage={this.state.hotelNameError}/></div>
                         <div className="address-title"><TextInput name="Phone Number"  ref={(input) => { this.phoneNumberInput = input; }} 
-                        values={tempObj.phoneNumber} maxLength="10" 
+                        values={isNil(tempObj.phoneNumber) ? "" : tempObj.phoneNumber} maxLength="10" 
                         onMaxLengthReached={()=>{this._focusNextField('address1Input')}}
                         errorMessage={this.state.phoneNumberError}/></div>
                     </div>
                     <div className="row auto-margin">
                         <div className="contact-address"><TextInput name="Address Line 1"  
                         ref={(input) => { this.address1Input = input; }} 
-                        values={tempObj.address1} maxLength="256"  
+                        values={isNil(tempObj.address1) ? "" : tempObj.address1} maxLength="256"  
                         onMaxLengthReached={()=>{this._focusNextField('address2Input')}}
                         errorMessage={this.state.addressError}/></div>
-                        <div className="contact-address"><TextInput name="Address Line 2"  ref={(input) => { this.address2Input = input; }} values={tempObj.address2} maxLength="256" onMaxLengthReached={()=>{this._focusNextField('cityInput')}}/></div>
+                        <div className="contact-address"><TextInput name="Address Line 2"  ref={(input) => { this.address2Input = input; }} values={isNil(tempObj.address2) ? "" : tempObj.address2} maxLength="256" onMaxLengthReached={()=>{this._focusNextField('cityInput')}}/></div>
                     </div>
                     <div className="row auto-margin">
                         <div className="contact-city"><TextInput name="City" maxLength="25" ref={(input) => { this.cityInput = input;}} 
-                        values={tempObj.city} 
+                        values={isNil(tempObj.city) ? "" : tempObj.city} 
                         onMaxLengthReached={()=>{this._focusNextField('postalInput')}}
                         errorMessage={this.state.cityError}/></div>
-                        <div className="contact-postal"><TextInput name="Postal Code" maxLength="6" ref={(input) => { this.postalInput = input;}} values={tempObj.pincode} onMaxLengthReached={()=>{this._focusNextField('savebutton')}}/></div>
+                        <div className="contact-postal"><TextInput name="Postal Code" maxLength="6" ref={(input) => { this.postalInput = input;}} values={isNil(tempObj.postalCode) ? "" : tempObj.postalCode} onMaxLengthReached={()=>{this._focusNextField('savebutton')}}/></div>
                     </div>
                     <div className="row auto-margin">
+                        <div className="show-image">
+                            {
+                                isNil(this.props.modalData.image) ? null : <img className="edit-image" src={this.props.modalData.image}/>
+                            }   
+                        </div>
                         <div className="contact-image">
-                        <span>
-                            <label htmlFor='single'>
-                                <FontAwesomeIcon icon={faImage} color='#f28a3f' size='7x' />
-                            </label>
-                            <input id="single" type="file" onChange={this._fileSelectHandler} 
-                            style= {{display : "none"}}ref={fileInput => this.fileInput = fileInput}
-                            accept=".png, .jpg, .jpeg, .svg"/>
-                        </span>
+                            <span>
+                                <label htmlFor='single'>
+                                    <FontAwesomeIcon icon={faImage} color='#f28a3f' size='7x' />
+                                </label>
+                                <input id="single" type="file" onChange={this._fileSelectHandler} 
+                                style= {{display : "none"}}ref={fileInput => this.fileInput = fileInput}
+                                accept=".png, .jpg, .jpeg, .svg"/>
+                            </span>
                         </div>
                         <div className="btn-container">
                             <button className="save-button hotel-save" onClick={this._onClickSave}>Save</button>
