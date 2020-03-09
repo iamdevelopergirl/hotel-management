@@ -8,8 +8,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class BasicAuthController {
 
-    @GetMapping(path = "/login")
+    @GetMapping(path = "/api/login")
     public AuthBean helloWorldBean() {
         return new AuthBean("Login success for user");
+    }
+
+    @GetMapping(path = "/api/test")
+    public String test() {
+        return "test";
     }
 }
