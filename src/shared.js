@@ -16,7 +16,7 @@ export class Settings extends React.Component {
       this._handleSettingsClick = this._handleSettingsClick.bind(this);
     }
   
-    componentWillMount() {
+    componentDidMount() {
       document.addEventListener('click', this._handleClick, false);
     }
   

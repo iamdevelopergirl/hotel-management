@@ -3,9 +3,8 @@ import AccountHeader from './accountHeader.js';
 import './styles/hotelInfo.css';
 import {ListViewToggle, TileViewToggle} from './view-toggle.js';
 import ItemsView from './item-view.js';
-import logo from './images/hotel-img.jpeg';
 import ModalContainer from './modal-container.js';
-import {isNil, isEmptyObject, HotelAPI, isFormDataObject} from './utils.js';
+import {isNil, HotelAPI, isFormDataObject} from './utils.js';
 import axios from 'axios';
 import {Spinner} from './spinner.js';
 import Pagination from './pagination.js';
@@ -45,7 +44,7 @@ class HotelInfo extends React.Component{
             this.setState({
                 uploading : true
             });
-            if(this.state.hotelItems === 0){
+            if(this.state.hotelItems.length === 0){
                 this._addHotelItem(payload.modalData);
             }
             else{
@@ -58,84 +57,52 @@ class HotelInfo extends React.Component{
                 else{
                     this._updateHotelItem(payload.modalData, payload.searchKey);
                 }
-            }
-            
+            }    
         }
     }
 
-    _addHotelItem(objToUpdate){
-        // const {
-        //         url,
-        //         headers,
-        //         param
-        //     } = HotelAPI(this.props.token);
-        let data = objToUpdate;
-        axios.post("/api/hotel", data)
-          .then(res => {
-            if(res.status == 201){
-                // this.setState({
-                //     uploading: false
-                // });
-                this.props.updateItems();
-            }
-            else{
-                this.setState({
-                    errorOccurred : true
-                });
-            }
-        });
-        // this.state.hotelItems.push(objToUpdate);
-        // this.setState({
-        //     hotelItems : this.state.hotelItems
-        // });
+    async _addItem(data){
+       return await axios.post("/api/hotel", data); 
     }
 
-    _updateHotelItem(objToUpdate, searchKey){
-        const {
-            url,
-            headers,
-            param
-        } = HotelAPI(this.props.token, searchKey);
+    async _updateItem(id, data){
+        return await axios.put(`/api/hotel/${id}`, data); 
+    }
 
-        if(!isFormDataObject(objToUpdate)){
-            axios.delete(`/api/hotel/${searchKey}`)
-            .then(res => {
-                if(res.status == 200){
-                    this.props.updateItems();
-                }
-                else{
-                    this.setState({
-                        errorOccurred : true
-                    });
-                }
+    async _deleteItem(id){
+        return await axios.delete(`/api/hotel/${id}`)
+    }
+
+    async _addHotelItem(objToUpdate){
+        let data = objToUpdate;
+        let res = await this._addItem(data);
+        if(!isNil(res.status) && res.status === 201){
+            this.props.updateItems();
+        }
+        else{
+            this.setState({
+                errorOccurred : true
             });
+        }
+    }
+
+    async _updateHotelItem(objToUpdate, searchKey){
+        let response = null;
+        if(!isFormDataObject(objToUpdate)){
+            response = await this._deleteItem(searchKey);
         }
         else{
             let data = objToUpdate;
-            axios.put(`/api/hotel/${searchKey}`, data)
-            .then(res => {
-                if(res.status == 200){
-                    this.props.updateItems();
-                }
-                else{
-                    this.setState({
-                        errorOccurred : true
-                    });
-                }
+            response = await this._updateItem(searchKey, data)
+        }
+        if(!isNil(response.status) && response.status === 200){
+            this.props.updateItems();
+        }
+        else{
+            this.setState({
+                errorOccurred : true
             });
         }
-        
-        // let indexToUpdate = this.state.hotelItems.map((item, index) => [index, item]).find((item) => Object.keys(item[1])[0] == searchKey)[0];
-        // if(isEmptyObject(objToUpdate[searchKey])){
-        //     this.state.hotelItems.splice(indexToUpdate, 1);
-        // }
-        // else{
-        //     this.state.hotelItems[indexToUpdate] = objToUpdate;
-        // }
-        
-        // this.setState({
-        //     hotelItems : this.state.hotelItems
-        // });
     }
 
     _showModal(modalType, id = null) {
@@ -188,11 +155,7 @@ class HotelInfo extends React.Component{
     }
 
     _handleScroll() {
-        const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
         const body = this._getBody();
-        const html = document.documentElement;
-        const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
-        const windowBottom = windowHeight + window.pageYOffset;
         const {
           mainContainerStyle =  {},
         } = this.state;
@@ -221,14 +184,6 @@ class HotelInfo extends React.Component{
 
     componentDidMount(){
         window.addEventListener("scroll", this._handleScroll);
-        // let stringifiedHotelItems = localStorage.getItem("hotelItems");
-        // if(isNil(stringifiedHotelItems)){
-        //     localStorage.setItem("hotelItems", JSON.stringify(this.state.hotelItems));
-        // }
-        // else{
-        //     let hotelItems = JSON.parse(stringifiedHotelItems);
-        //     this.setState({hotelItems : hotelItems});
-        // } 
     }
 
     componentWillUnmount() {

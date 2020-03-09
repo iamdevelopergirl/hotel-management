@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import HotelInfo from './hotelInfo'
+import HotelInfo from './hotel-info.js'
 import { AuthContext } from "./App";
 import logo from './images/hotel-img.jpeg';
 import './styles/Login.css';
