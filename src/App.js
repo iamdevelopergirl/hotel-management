@@ -35,7 +35,7 @@ function App() {
   const [state, dispatch] = React.useReducer(reducer, initialState);
   if(AuthenticationService.isUserLoggedIn()){
     state.user = AuthenticationService.getLoggedInUser();
-    state.isAuthenticated = true;
+    state.isAuthenticated = true; 
   }
   console.log(state);
   return (

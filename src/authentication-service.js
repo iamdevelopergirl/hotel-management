@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {isNil} from './utils.js';
 const USER = "test";
-const loginAPI = `/login`;
+const loginAPI = `/api/login`;
 const loggedInUserAttribute = "authenticatedUser";
 
 class AuthenticationService{

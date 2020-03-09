@@ -7,6 +7,7 @@ import Pagination from './pagination.js';
 import axios from 'axios';
 import {HotelAPI} from './utils.js';
 import {Spinner} from './spinner.js';
+import { ErrorOccurred } from './error-occurred';
 
 const initialState = {
     hotelItems: [],
@@ -69,21 +70,6 @@ export const Main = ({emailId}) => {
                 newHotelItems.push(newObj);
               });
             }
-            const mockItems = 
-    [{"1" : { "name" : "elakya1" , "phoneNumber" : 12312321, "city" : "tirupur",  "image": logo}},
-     {"2" : { "name" : "elakya2" , "phoneNumber" : 12312321, "city" : "tirupur",  "image": logo}},
-     {"3" : { "name" : "elakya3" , "phoneNumber" : 12312321, "city" : "tirupur",  "image": logo}},
-     {"4" : { "name" : "elakya4" , "phoneNumber" : 12312321, "city" : "tirupur",  "image": logo}},
-     {"5" : { "name" : "elakya5" , "phoneNumber" : 12312321, "city" : "tirupur",  "image": logo}},
-     {"6" : { "name" : "elakya6" , "phoneNumber" : 12312321, "city" : "tirupur",  "image": logo}},
-     {"7" : { "name" : "elakya7" , "phoneNumber" : 12312321, "city" : "tirupur",  "image": logo}},
-     {"8" : { "name" : "elakya8" , "phoneNumber" : 12312321, "city" : "tirupur",  "image": logo}},
-     {"9" : { "name" : "elakya9" , "phoneNumber" : 12312321, "city" : "tirupur",  "image": logo}},
-     {"10" : { "name" : "elakya10" , "phoneNumber" : 12312321, "city" : "tirupur",  "image": logo}},
-     {"11" : { "name" : "elakya11" , "phoneNumber" : 12312321, "city" : "tirupur",  "image": logo}},
-     {"12" : { "name" : "elakya12" , "phoneNumber" : 12312321, "city" : "tirupur",  "image": logo}},
-     {"13" : { "name" : "elakya13" , "phoneNumber" : 12312321, "city" : "tirupur",  "image": logo}}
-    ];
             dispatch({
               type: "FETCH_ITEMS_SUCCESS",
               payload: newHotelItems
@@ -111,6 +97,10 @@ export const Main = ({emailId}) => {
     }
 
     const onLogoutClicked = () => {
+      axios.get("/logout")
+      .then(() => {
+        console.log("Logged out");
+      })
       authDispatch({
         type: "LOGOUT"
       });
@@ -118,7 +108,7 @@ export const Main = ({emailId}) => {
 
     return (
         <div>
-            {state.isFetching ? ( <Spinner/> ) : state.hasError ? ( <span className="App-header">AN ERROR HAS OCCURED</span> ) : 
+            {state.isFetching ? ( <Spinner/> ) : state.hasError ? ( <ErrorOccurred/> ) : 
             ( <div> 
               <HotelInfo hotelItems={currentItem} emailId={emailId} updateItems={updateItems} token={authState.token} uploading={uploading} itemsPerPage={itemsPerPage} totalItems={state.hotelItems.length} paginate={paginate} onLogoutClicked={onLogoutClicked}/> 
              </div> )}
