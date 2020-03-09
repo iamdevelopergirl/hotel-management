@@ -32,3 +32,6 @@ cloudinary.uploader().upload("sample.jpg",
 
 
 http://localhost:8080/api/hotels - GET
+
+
+"test:debug": "react-scripts --inspect-brk test --runInBand --no-cache"

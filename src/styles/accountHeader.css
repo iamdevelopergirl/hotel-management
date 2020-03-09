@@ -2,9 +2,10 @@
     height: 20px;
     line-height: 16px;
     padding-top: 2px;
-    font-size: 12px;
+    font-weight: bold;
+    font-size: 14px;
     text-align: right;
-    color: #0089c6;
+    color: #f08216;
     cursor: pointer;
     overflow: hidden;
     white-space: nowrap;

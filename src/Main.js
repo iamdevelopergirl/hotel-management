@@ -41,19 +41,14 @@ const reducer = (state, action) => {
 
 
 export const Main = ({emailId}) => {
-    const { state: authState } = React.useContext(AuthContext);
+    const { state: authState, dispatch : authDispatch } = React.useContext(AuthContext);
     const [state, dispatch] = React.useReducer(reducer, initialState);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(8);
     const [updateCount, setUpdateCount] = useState(0);
     const [uploading, setUploading] = useState(false);
 
-    const {
-      url,
-      headers,
-      param
-    } = HotelAPI(authState.token);
-
+    
     React.useEffect(() => {
         dispatch({
           type: "FETCH_ITEMS_REQUEST"
@@ -115,11 +110,17 @@ export const Main = ({emailId}) => {
       setUpdateCount(newUpdateCount)
     }
 
+    const onLogoutClicked = () => {
+      authDispatch({
+        type: "LOGOUT"
+      });
+    }
+
     return (
         <div>
             {state.isFetching ? ( <Spinner/> ) : state.hasError ? ( <span className="App-header">AN ERROR HAS OCCURED</span> ) : 
             ( <div> 
-              <HotelInfo hotelItems={currentItem} emailId={emailId} updateItems={updateItems} token={authState.token} uploading={uploading} itemsPerPage={itemsPerPage} totalItems={state.hotelItems.length} paginate={paginate}/> 
+              <HotelInfo hotelItems={currentItem} emailId={emailId} updateItems={updateItems} token={authState.token} uploading={uploading} itemsPerPage={itemsPerPage} totalItems={state.hotelItems.length} paginate={paginate} onLogoutClicked={onLogoutClicked}/> 
              </div> )}
         </div>
     )

@@ -1,6 +1,8 @@
+@media (prefers-reduced-motion: no-preference) {
 .fadein {
     animation: fadein 2s;
   }
+}
   
   @keyframes fadein {
     from {
@@ -11,16 +13,18 @@
     }
   }
   
+  @media (prefers-reduced-motion: no-preference) {
   .spinner {
     animation: spin 1.2s infinite linear;
   }
+}
   
   .spinner svg {
     background: #f2f2f2;
     border-radius: 50%
   }
   
-  @-webkit-keyframes spin {
+  @keyframes spin {
     0%  {
       -webkit-transform: rotate(0deg)
     }
@@ -29,13 +33,15 @@
     }   
   }
   
+  @media (prefers-reduced-motion: no-preference) {
   .rolling {
     position: absolute;
     animation: move 6s ease-out;
     filter: drop-shadow(4px 4px 4px #999);
   }
+}
   
-  @-webkit-keyframes move {
+  @keyframes move {
     0%  {
       left: -5%;
     }

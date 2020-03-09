@@ -49,7 +49,7 @@ export default class AddEditModal extends React.Component{
         formData.append("phoneNumber", this.phoneNumberInput.state.values);
 
         if(!isString(this.state.selectedFile)){
-            formData.append("image", this.state.selectedFile);
+            formData.append("image", this.state.selectedFile);  
         }
 
         let id = this.props.modalKey;
@@ -101,6 +101,12 @@ export default class AddEditModal extends React.Component{
         if(isNil(addObj.image)){
             imageErrorMessage = "Please upload atleast one image";
             errorState = true;
+        }
+        else if(!isString(addObj.image)){
+            if(addObj.image.size > 1000000){
+                imageErrorMessage = "Please upload image with size not more than 1MB";
+                errorState = true;
+            }
         }
         
         this.setState({
@@ -199,13 +205,14 @@ export default class AddEditModal extends React.Component{
                         </div>
                         <div className="contact-image">
                             <span>
-                                <p className="upload-message">Click to upload an image</p>
+                                <p className="upload-message">Click to upload an image *</p>
                                 <label htmlFor='single'>
                                     <FontAwesomeIcon icon={faImage} color='#f28a3f' size='7x' />
                                 </label>
                                 <input id="single" type="file" className="upload" onChange={this._fileSelectHandler} 
                                 style= {{display : "none"}}ref={fileInput => this.fileInput = fileInput}
-                                accept=".png, .jpg, .jpeg, .svg"/>
+                                accept=".png, .jpg, .jpeg, .svg"
+                                data-max-size="1024"/>
                                 <p className="error-message">{this.state.imageError}</p>
                             </span>
                         </div>

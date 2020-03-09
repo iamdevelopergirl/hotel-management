@@ -3,11 +3,13 @@ import './styles/Login.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faKey } from '@fortawesome/free-solid-svg-icons';
 import { AuthContext } from "./App";
+import AuthenticationService from './authentication-service.js';
 
 function Login(){
     const { dispatch } = React.useContext(AuthContext);
+    
     const initialState = {
-        email: "",
+        username: "",
         password: "",
         isSubmitting: false,
         errorMessage: null
@@ -28,35 +30,24 @@ function Login(){
           isSubmitting: true,
           errorMessage: null
         });
-        fetch("https://hookedbe.herokuapp.com/api/login", {
-          method: "post",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            username: data.email,
-            password: data.password
-          })
-        })
-          .then(res => {
-            if (res.ok) {
-              return res.json();
+
+        AuthenticationService.executeBasicAuthenticationService(data.username, data.password)
+        .then(()=> {
+          AuthenticationService.registerSuccessfulLogin(data.username, data.password);
+          dispatch({
+            type: "LOGIN",
+            payload: {
+              username : data.username
             }
-            throw res;
-          })
-          .then(resJson => {
-            dispatch({
-                type: "LOGIN",
-                payload: resJson
-            })
-          })
-          .catch(error => {
-            setData({
-              ...data,
-              isSubmitting: false,
-              errorMessage: error.message || error.statusText
-            });
           });
+        })
+        .catch((error) => {
+          setData({
+            ...data,
+            isSubmitting: false,
+            errorMessage: error.message || error.statusText
+          });
+        })
       };
 
     return (
@@ -64,7 +55,7 @@ function Login(){
         <div className="login-container">
             <div className="input-container">
                 <FontAwesomeIcon icon={faUser} className="icon"/>
-                <input type="email" className="input-wrap" placeholder="Email" value={data.email}
+                <input type="text" className="input-wrap" placeholder="Username" value={data.username}
                 onChange={handleInputChange}></input>
             </div>
             <div className="input-container">

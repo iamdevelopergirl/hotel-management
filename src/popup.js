@@ -4,9 +4,9 @@ import './styles/popup.css';
 function Popup(props){
     
     const handleOnClick = event => { 
-
+        props.onClick();
     }
-
+    
     return(
         <div className="base-popup">
           <div className="triangle-with-shadow"></div>

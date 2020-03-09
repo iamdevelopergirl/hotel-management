@@ -1,8 +1,12 @@
 import React from 'react';
 import Popup from './popup.js';
 import './styles/accountHeader.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHotel } from '@fortawesome/free-solid-svg-icons';
+
 
 class AccountHeader extends React.Component{
+    
     constructor(props){
         super(props);
         this.state = {
@@ -33,13 +37,18 @@ class AccountHeader extends React.Component{
         }
     }
 
-    signOut(event){
+    signOut(){
         this.setState({showSignOutPopup:false});
+        this.props.onLogoutClicked();
+        //
     }
 
     render(){
         return(
             <div className="header row">
+                <div className="hotel-image">
+                    <FontAwesomeIcon icon={faHotel} size='2x' color="#f08216"/>
+                </div>
                 <div className='column popup-container'>
                     <div className="na-account" onClick={(e) => this.onAccountClick(e)}>{this.props.email}</div>
                     {this.state.showSignOutPopup ? <Popup onClick={() => this.signOut()} ><span id="sign-out">Sign out</span></Popup> : null}

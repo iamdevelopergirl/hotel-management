@@ -6,23 +6,19 @@ export const AuthContext = React.createContext();
 
 const initialState = {
   isAuthenticated: false,
-  user: null,
-  token: null,
+  user: null
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
     case "LOGIN":
-      localStorage.setItem("user", JSON.stringify(action.payload.user));
-      localStorage.setItem("token", JSON.stringify(action.payload.token));
       return {
         ...state,
         isAuthenticated: true,
-        user: action.payload.user,
-        token: action.payload.token
+        user: action.payload.username
       };
     case "LOGOUT":
-      localStorage.clear();
+      sessionStorage.clear();
       return {
         ...state,
         isAuthenticated: false,
@@ -42,9 +38,9 @@ function App() {
         state,
         dispatch
       }}>
-    <div className="App">
-      <div className="App">{state.isAuthenticated ? <Login/> : <Main emailId={state.user}/>}</div>
-    </div>
+      <div className="App">
+        <div className="App">{state.isAuthenticated ? <Login/> : <Main emailId={state.user}/>}</div>
+      </div>
     </AuthContext.Provider>
     // <div className="App">
     // </div>

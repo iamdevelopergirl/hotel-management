@@ -9,7 +9,9 @@ import {isNil, isEmptyObject, HotelAPI, isFormDataObject} from './utils.js';
 import axios from 'axios';
 import {Spinner} from './spinner.js';
 import Pagination from './pagination.js';
-import {ErrorOccurred} from './error-occurred.js'
+import {ErrorOccurred} from './error-occurred.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHatCowboy } from '@fortawesome/free-solid-svg-icons';
 
 
 class HotelInfo extends React.Component{
@@ -249,15 +251,18 @@ class HotelInfo extends React.Component{
             {
                 this.state.showModal ? <ModalContainer toDisplay={this.state.toDisplayModal} modalData={this.state.modalData} modalKey={this.state.modalKey} handleModal={this._handleModal}/> : null
             }
-            <AccountHeader email="elakya" showPopup/>
+            <AccountHeader email="elakya" onLogoutClicked={this.props.onLogoutClicked} showPopup/>
             <div className="main-container" style={this.state.mainContainerStyle}>
                 <div className="container-gradient"></div>
                 <div className="container-under-banner"></div>
                 <div className="content column">
                     <div className="widget-div"></div>
                     <div className="title-div">
-                        <div className="main-ui-icon"></div>
-                        <div className="main-ui-title"><b>Hotel Management Tool</b></div>
+                        <div className="main-ui-icon">
+                            <FontAwesomeIcon icon={faHatCowboy} size='5x' color="white"/>
+                        </div>
+                        <div className="main-ui-title"><b>Night Fury Hotel Inventory</b>
+                        </div>
                     </div>
                     <div className="row add-item-widget">
                         <div className="hotel-widget1 background"></div>
