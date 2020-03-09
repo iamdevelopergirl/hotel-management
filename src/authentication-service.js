@@ -3,7 +3,7 @@ import {isNil} from './utils.js';
 const USER = "test";
 const PASSWORD  = "test";
 const getAPIUrl = `/api/hotel/${USER}`;
-const loginAPI = `/basicauth`;
+const loginAPI = `/login`;
 const loggedInUserAttribute = "authenticatedUser";
 
 class AuthenticationService{
@@ -20,7 +20,7 @@ class AuthenticationService{
         })
     }
 
-    registerSuccessFulLogin(username, password){
+    registerSuccessfulLogin(username, password){
         sessionStorage.setItem(loggedInUserAttribute, username);
         this.setUpAxiosInterceptors(this.createBasicAuthToken(username, password));
     }
@@ -34,6 +34,10 @@ class AuthenticationService{
                 return config;
             }
         )
+    }
+
+    getLoggedInUser(){
+        return sessionStorage.getItem(loggedInUserAttribute);
     }
     
     isUserLoggedIn(){

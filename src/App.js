@@ -2,7 +2,9 @@ import React from 'react';
 import './styles/App.css';
 import Main from './Main.js';
 import Login from './login.js';
+import AuthenticationService from './authentication-service.js';
 export const AuthContext = React.createContext();
+
 
 const initialState = {
   isAuthenticated: false,
@@ -31,6 +33,10 @@ const reducer = (state, action) => {
 
 function App() {
   const [state, dispatch] = React.useReducer(reducer, initialState);
+  if(AuthenticationService.isUserLoggedIn()){
+    state.user = AuthenticationService.getLoggedInUser();
+    state.isAuthenticated = true;
+  }
   console.log(state);
   return (
     <AuthContext.Provider
@@ -39,7 +45,7 @@ function App() {
         dispatch
       }}>
       <div className="App">
-        <div className="App">{state.isAuthenticated ? <Login/> : <Main emailId={state.user}/>}</div>
+        <div className="App">{!state.isAuthenticated ? <Login/> : <Main emailId={state.user}/>}</div>
       </div>
     </AuthContext.Provider>
     // <div className="App">

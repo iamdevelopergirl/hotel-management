@@ -32,7 +32,8 @@ function Login(){
         });
 
         AuthenticationService.executeBasicAuthenticationService(data.username, data.password)
-        .then(()=> {
+        .then((res) => {
+          console.log(res);
           AuthenticationService.registerSuccessfulLogin(data.username, data.password);
           dispatch({
             type: "LOGIN",
@@ -55,12 +56,12 @@ function Login(){
         <div className="login-container">
             <div className="input-container">
                 <FontAwesomeIcon icon={faUser} className="icon"/>
-                <input type="text" className="input-wrap" placeholder="Username" value={data.username}
+                <input type="text" name="username" className="input-wrap" placeholder="Username" value={data.username}
                 onChange={handleInputChange}></input>
             </div>
             <div className="input-container">
                 <FontAwesomeIcon icon={faKey} className="icon"/>
-                <input type="password" className="input-wrap" placeholder="Password" value={data.password}
+                <input type="password" name="password" className="input-wrap" placeholder="Password" value={data.password}
                 onChange={handleInputChange}></input>
             </div>
             <div className="submit-login">
