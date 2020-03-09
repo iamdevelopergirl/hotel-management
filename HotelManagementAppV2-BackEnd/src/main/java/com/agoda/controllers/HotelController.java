@@ -40,23 +40,22 @@ public class HotelController {
     }
 
     @PostMapping(value = "/hotel", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Hotel> add(@RequestParam(value = "image", required = false) MultipartFile image,
+    public ResponseEntity<Hotel> add(@RequestParam(value = "image") MultipartFile image,
                                      @RequestParam("name") String name,
                                      @RequestParam("address1") String address1,
                                      @RequestParam(value = "address2", required = false) String address2,
                                      @RequestParam("city") String city,
                                      @RequestParam("postalCode") String postalCode,
                                      @RequestParam("phoneNumber") String phoneNumber,
-                                     User userIn) throws URISyntaxException, IOException {
+                                     User userIn) throws URISyntaxException {
         LOGGER.info("Request to add hotel {}", name);
 
         String image1 = "";
-        if(image != null) {
-            Path filepath = Paths.get("/Users/v_elakya/code/hotel-management-app/HotelManagementAppV2/", image.getOriginalFilename());
-            System.out.println(filepath);
-            try (OutputStream os = Files.newOutputStream(filepath)) {
-                os.write(image.getBytes());
-            }
+        Path filepath = Paths.get("./", image.getOriginalFilename());
+        System.out.println(filepath);
+        try (OutputStream os = Files.newOutputStream(filepath)) {
+            os.write(image.getBytes());
+
             File toUpload = new File(String.valueOf(filepath));
             Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap("cloud_name", "elakyahotelmanagementapp",
                     "api_key", "158233582135223",
@@ -65,6 +64,10 @@ public class HotelController {
             Map uploadResult = cloudinary.uploader().upload(toUpload, ObjectUtils.emptyMap());
             System.out.println(uploadResult);
             image1 = (String) uploadResult.get("url");
+            toUpload.delete();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
         }
         // setting user
 //        userIn = userService.getUserById(99);
@@ -75,10 +78,49 @@ public class HotelController {
         return ResponseEntity.created(new URI("/api/hotel" + result.getId())).body(result);
     }
 
+
     @PutMapping("/hotel/{id}")
-    public ResponseEntity<Hotel> update(@RequestBody Hotel hotel) {
-        LOGGER.info("Request to update hotel: {}", hotel);
-        Hotel result = hotelService.saveHotel(hotel);
+    public ResponseEntity<Hotel> update(@RequestParam(value = "image", required = false) MultipartFile image,
+                                        @RequestParam("name") String name,
+                                        @RequestParam("address1") String address1,
+                                        @RequestParam(value = "address2", required = false) String address2,
+                                        @RequestParam("city") String city,
+                                        @RequestParam("postalCode") String postalCode,
+                                        @RequestParam("phoneNumber") String phoneNumber,
+                                        @PathVariable int id) throws URISyntaxException {
+        String imageUrl = "";
+        File toUpload = null;
+        if(image != null) {
+            Path filepath = Paths.get(System.getProperty("user.dir"), image.getOriginalFilename());
+            System.out.println(filepath);
+            try (OutputStream os = Files.newOutputStream(filepath)) {
+                os.write(image.getBytes());
+                toUpload = new File(String.valueOf(filepath));
+                Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap("cloud_name", "elakyahotelmanagementapp",
+                        "api_key", "158233582135223",
+                        "api_secret", "8DasrmfvrvJInKFwa2TAIzZZEDs"));
+
+                Map uploadResult = cloudinary.uploader().upload(toUpload, ObjectUtils.emptyMap());
+                System.out.println(uploadResult);
+                imageUrl = (String) uploadResult.get("url");
+                Hotel hotel = new Hotel(id, name, address1, address2, city, postalCode, phoneNumber, imageUrl);
+                Hotel result = hotelService.saveHotel(hotel);
+                return ResponseEntity.ok().body(result);
+
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+            finally {
+                toUpload.delete();
+            }
+        }
+        // setting user
+//        userIn = userService.getUserById(99);
+//        hotel.setUser(userIn);
+
+        Hotel hotel = new Hotel(id, name, address1, address2, city, postalCode, phoneNumber);
+        Hotel result = hotelService.updateHotel(hotel);
         return ResponseEntity.ok().body(result);
     }
 

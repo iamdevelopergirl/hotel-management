@@ -28,6 +28,18 @@ public class HotelService {
         return hotelRepo.save(hotel);
     }
 
+    public Hotel updateHotel(Hotel hotel){
+        Hotel hotelDto = hotelRepo.getOne(hotel.getId());
+
+        hotelDto.setName(hotel.getName());
+        hotelDto.setAddress1(hotel.getAddress1());
+        hotelDto.setAddress2(hotel.getAddress2());
+        hotelDto.setCity(hotel.getCity());
+        hotelDto.setPostalCode(hotel.getPostalCode());
+        hotelDto.setPhoneNumber(hotel.getPhoneNumber());
+
+        return hotelRepo.save(hotelDto);
+    }
     public void deleteHotel(int id) {
         hotelRepo.deleteById(id);
     }

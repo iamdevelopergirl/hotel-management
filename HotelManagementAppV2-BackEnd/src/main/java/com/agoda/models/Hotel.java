@@ -41,11 +41,33 @@ public class Hotel {
 
     public Hotel(String name, String address1, String address2, String city, String postalCode, String phoneNumber, String image) {
         super();
-        this.id = 1;
         this.name = name;
         this.address1 = address1;
         this.image = image;
         //this.user = user;
+        this.address2 = address2;
+        this.city = city;
+        this.postalCode = postalCode;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public Hotel(int id, String name, String address1, String address2, String city, String postalCode, String phoneNumber, String image) {
+        super();
+        this.id = id;
+        this.name = name;
+        this.address1 = address1;
+        this.image = image;
+        this.address2 = address2;
+        this.city = city;
+        this.postalCode = postalCode;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public Hotel(int id, String name, String address1, String address2, String city, String postalCode, String phoneNumber) {
+        super();
+        this.id = id;
+        this.name = name;
+        this.address1 = address1;
         this.address2 = address2;
         this.city = city;
         this.postalCode = postalCode;

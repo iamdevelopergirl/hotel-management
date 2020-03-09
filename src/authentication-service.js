@@ -1,8 +1,6 @@
 import axios from 'axios';
 import {isNil} from './utils.js';
 const USER = "test";
-const PASSWORD  = "test";
-const getAPIUrl = `/api/hotel/${USER}`;
 const loginAPI = `/login`;
 const loggedInUserAttribute = "authenticatedUser";
 
