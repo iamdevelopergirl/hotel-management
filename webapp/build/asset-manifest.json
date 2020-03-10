@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/static/css/main.dd126736.chunk.css",
+    "main.js": "/static/js/main.9aed4c44.chunk.js",
+    "main.js.map": "/static/js/main.9aed4c44.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.1436f226.js",
+    "runtime-main.js.map": "/static/js/runtime-main.1436f226.js.map",
+    "static/js/2.49d561d7.chunk.js": "/static/js/2.49d561d7.chunk.js",
+    "static/js/2.49d561d7.chunk.js.map": "/static/js/2.49d561d7.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.4516311622ecff89016b9d25a79df29a.js": "/precache-manifest.4516311622ecff89016b9d25a79df29a.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.dd126736.chunk.css.map": "/static/css/main.dd126736.chunk.css.map",
+    "static/js/2.49d561d7.chunk.js.LICENSE.txt": "/static/js/2.49d561d7.chunk.js.LICENSE.txt",
+    "static/media/hotelInfo.css": "/static/media/ic-nav-add-item.b8737790.svg",
+    "static/media/popup.css": "/static/media/bg-anchor-up.e2ac36a6.svg",
+    "static/media/bg-img.jpg": "/static/media/bg-img.9de67e20.jpg",
+    "static/media/delete-confirmation.css": "/static/media/close-logo.70f3456d.png",
+    "static/media/ic-hotels-grid-settings.svg": "/static/media/ic-hotels-grid-settings.5982968e.svg",
+    "static/media/ic-modal-addresses.svg": "/static/media/ic-modal-addresses.fc5d3c57.svg",
+    "static/media/ic-tab-ui-setting.svg": "/static/media/ic-tab-ui-setting.dc285ca7.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.1436f226.js",
+    "static/js/2.49d561d7.chunk.js",
+    "static/css/main.dd126736.chunk.css",
+    "static/js/main.9aed4c44.chunk.js"
+  ]
+}
