@@ -7,6 +7,7 @@ import Pagination from './pagination.js';
 import axios from 'axios';
 import {Spinner} from './spinner.js';
 import { ErrorOccurred } from './error-occurred';
+import {isNil} from './utils.js'
 
 const initialState = {
     hotelItems: [],
@@ -54,13 +55,8 @@ export const Main = ({emailId}) => {
           type: "FETCH_ITEMS_REQUEST"
         });
 
-        axios.get("/api/hotels", {
-          // headers: {
-          //   Authorization: `Bearer ${authState.token}`
-          // }
-        })
+        axios.get("/api/hotels")
           .then(resJson => {
-            console.log(resJson);
             let newHotelItems = []
             if(resJson.data.length !== 0){
               resJson.data.map((item) => {
@@ -75,7 +71,6 @@ export const Main = ({emailId}) => {
             });
           })
           .catch(error => {
-            console.log(error);
             dispatch({
               type: "FETCH_ITEMS_FAILURE"
             });
@@ -95,14 +90,17 @@ export const Main = ({emailId}) => {
       setUpdateCount(newUpdateCount)
     }
 
-    const onLogoutClicked = () => {
-      axios.get("/logout")
-      .then(() => {
-        console.log("Logged out");
-      })
-      authDispatch({
-        type: "LOGOUT"
-      });
+    const logout = async () => {
+      return await axios.get("/logout");
+    }
+
+    const onLogoutClicked = async () => {
+      let res = await logout();
+      if(!isNil(res.status) && res.status === 200){
+        authDispatch({
+          type: "LOGOUT"
+        });
+      }
     }
 
     return (

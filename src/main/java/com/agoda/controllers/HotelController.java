@@ -50,30 +50,9 @@ public class HotelController {
                                      User userIn) throws URISyntaxException {
         LOGGER.info("Request to add hotel {}", name);
 
-        String image1 = "";
-        Path filepath = Paths.get("./", image.getOriginalFilename());
-        System.out.println(filepath);
-        try (OutputStream os = Files.newOutputStream(filepath)) {
-            os.write(image.getBytes());
+        String imageToAdd = getImage(image);
 
-            File toUpload = new File(String.valueOf(filepath));
-            Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap("cloud_name", "elakyahotelmanagementapp",
-                    "api_key", "158233582135223",
-                    "api_secret", "8DasrmfvrvJInKFwa2TAIzZZEDs"));
-
-            Map uploadResult = cloudinary.uploader().upload(toUpload, ObjectUtils.emptyMap());
-            System.out.println(uploadResult);
-            image1 = (String) uploadResult.get("url");
-            toUpload.delete();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        // setting user
-//        userIn = userService.getUserById(99);
-//        hotel.setUser(userIn);
-
-        Hotel hotel = new Hotel(name, address1, address2, city, postalCode, phoneNumber, image1);
+        Hotel hotel = new Hotel(name, address1, address2, city, postalCode, phoneNumber, imageToAdd);
         Hotel result = hotelService.saveHotel(hotel);
         return ResponseEntity.created(new URI("/api/hotel" + result.getId())).body(result);
     }
@@ -88,36 +67,13 @@ public class HotelController {
                                         @RequestParam("postalCode") String postalCode,
                                         @RequestParam("phoneNumber") String phoneNumber,
                                         @PathVariable int id) throws URISyntaxException {
-        String imageUrl = "";
-        File toUpload = null;
-        if(image != null) {
-            Path filepath = Paths.get(System.getProperty("user.dir"), image.getOriginalFilename());
-            System.out.println(filepath);
-            try (OutputStream os = Files.newOutputStream(filepath)) {
-                os.write(image.getBytes());
-                toUpload = new File(String.valueOf(filepath));
-                Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap("cloud_name", "elakyahotelmanagementapp",
-                        "api_key", "158233582135223",
-                        "api_secret", "8DasrmfvrvJInKFwa2TAIzZZEDs"));
 
-                Map uploadResult = cloudinary.uploader().upload(toUpload, ObjectUtils.emptyMap());
-                System.out.println(uploadResult);
-                imageUrl = (String) uploadResult.get("url");
-                Hotel hotel = new Hotel(id, name, address1, address2, city, postalCode, phoneNumber, imageUrl);
-                Hotel result = hotelService.saveHotel(hotel);
-                return ResponseEntity.ok().body(result);
-
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-            finally {
-                toUpload.delete();
-            }
+        if(image != null){
+            String imageToUpdate = getImage(image);
+            Hotel hotel = new Hotel(id, name, address1, address2, city, postalCode, phoneNumber, imageToUpdate);
+            Hotel result = hotelService.saveHotel(hotel);
+            return ResponseEntity.ok().body(result);
         }
-        // setting user
-//        userIn = userService.getUserById(99);
-//        hotel.setUser(userIn);
 
         Hotel hotel = new Hotel(id, name, address1, address2, city, postalCode, phoneNumber);
         Hotel result = hotelService.updateHotel(hotel);
@@ -129,6 +85,31 @@ public class HotelController {
         LOGGER.info("Request to delete hotel: {}", id);
         hotelService.deleteHotel(id);
         return ResponseEntity.ok().build();
+    }
+
+
+    public String getImage(MultipartFile image) {
+        String imageToAdd = "";
+        File toUpload = null;
+        Path filepath = Paths.get(System.getProperty("user.dir"), image.getOriginalFilename());
+        try (OutputStream os = Files.newOutputStream(filepath)) {
+            os.write(image.getBytes());
+
+            toUpload = new File(String.valueOf(filepath));
+            Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap("cloud_name", "elakyahotelmanagementapp",
+                    "api_key", "158233582135223",
+                    "api_secret", "8DasrmfvrvJInKFwa2TAIzZZEDs"));
+
+            Map uploadResult = cloudinary.uploader().upload(toUpload, ObjectUtils.emptyMap());
+            imageToAdd = (String) uploadResult.get("url");
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        finally {
+            toUpload.delete();
+        }
+        return imageToAdd;
     }
 
 }
