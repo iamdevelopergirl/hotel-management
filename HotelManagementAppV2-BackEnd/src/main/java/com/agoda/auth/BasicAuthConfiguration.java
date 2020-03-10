@@ -31,11 +31,6 @@ public class BasicAuthConfiguration extends WebSecurityConfigurerAdapter {
                 .logoutUrl("/logout")
                 .deleteCookies("JSESSIONID")
                 .invalidateHttpSession(true)
-                .logoutSuccessHandler(logoutSuccessHandler())
-                .permitAll()
-                .and().sessionManagement()
-                .maximumSessions(1)
-                .maxSessionsPreventsLogin(true)
-                .expiredUrl("/");
+                .logoutSuccessHandler(logoutSuccessHandler());
     }
 }

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class BasicAuthController {
 
-    @GetMapping(path = "/api/login")
+    @GetMapping(path = "/login")
     public AuthBean helloWorldBean() {
         return new AuthBean("Login success for user");
     }

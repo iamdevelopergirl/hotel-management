@@ -53,6 +53,7 @@ function Login(){
 
     return (
       <div className="App-header">
+        <form onSubmit={handleOnSubmit}>
         <div className="login-container">
             <div className="input-container">
                 <FontAwesomeIcon icon={faUser} className="icon"/>
@@ -65,13 +66,14 @@ function Login(){
                 onChange={handleInputChange}></input>
             </div>
             <div className="submit-login">
-                <button disabled={data.isSubmitting} className="signin" onClick={handleOnSubmit}>{data.isSubmitting ? ("Loading") : (`Login`)}
+                <button type="submit" disabled={data.isSubmitting} className="signin">{data.isSubmitting ? ("Loading") : (`Login`)}
                 {isNil(data.errorMessage) ? "" : data.errorMessage}
                 </button>
             </div>
             <div className="privacy-footer">
             </div>
         </div>
+        </form>
       </div>
     )
 }
