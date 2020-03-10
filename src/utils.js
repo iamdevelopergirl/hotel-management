@@ -19,20 +19,6 @@ export function isString(str) {
     return false;
 }
 
-export function HotelAPI(authorizationToken, paramId){
-    let url = "/api/hotel";
-    let headers = {
-        Authorization : authorizationToken
-    };
-    let params = {}
-    if(!isNil(paramId)){
-        params = {
-            hotelId : paramId
-        }
-    }
-    return {url, headers, params};
-}
-
 export function isFormDataObject(formdata){
     if(!isNil(formdata) && (formdata instanceof FormData)){
         return true;

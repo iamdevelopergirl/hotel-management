@@ -5,7 +5,6 @@ import logo from './images/hotel-img.jpeg';
 import './styles/Login.css';
 import Pagination from './pagination.js';
 import axios from 'axios';
-import {HotelAPI} from './utils.js';
 import {Spinner} from './spinner.js';
 import { ErrorOccurred } from './error-occurred';
 
@@ -85,7 +84,7 @@ export const Main = ({emailId}) => {
 
     const indexOfLastItem = currentPage * itemsPerPage; 
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItem = state.hotelItems.length!== 0 ? state.hotelItems.slice(indexOfFirstItem, indexOfLastItem) : 0;
+    const currentItem = state.hotelItems.length !== 0 ? state.hotelItems.slice(indexOfFirstItem, indexOfLastItem) : [];
 
     const paginate = (pageNumber) => {
       setCurrentPage(pageNumber);

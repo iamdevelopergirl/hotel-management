@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faKey } from '@fortawesome/free-solid-svg-icons';
 import { AuthContext } from "./App";
 import AuthenticationService from './authentication-service.js';
+import {isNil} from './utils.js';
 
 function Login(){
     const { dispatch } = React.useContext(AuthContext);
@@ -23,7 +24,7 @@ function Login(){
         });
     };
 
-    const handleOnSubmit = event => {
+    const handleOnSubmit = async event => {
         event.preventDefault();
         setData({
           ...data,
@@ -31,9 +32,8 @@ function Login(){
           errorMessage: null
         });
 
-        AuthenticationService.executeBasicAuthenticationService(data.username, data.password)
-        .then((res) => {
-          console.log(res);
+        let res = await AuthenticationService.executeBasicAuthenticationService(data.username, data.password)
+        if(!isNil(res.status) && res.status == 200){
           AuthenticationService.registerSuccessfulLogin(data.username, data.password);
           dispatch({
             type: "LOGIN",
@@ -41,14 +41,14 @@ function Login(){
               username : data.username
             }
           });
-        })
-        .catch((error) => {
+        }
+        else{
           setData({
             ...data,
             isSubmitting: false,
-            errorMessage: error.message || error.statusText
+            errorMessage: "Could not validate credentials"
           });
-        })
+        }
       };
 
     return (
@@ -65,7 +65,8 @@ function Login(){
                 onChange={handleInputChange}></input>
             </div>
             <div className="submit-login">
-                <button disabled={data.isSubmitting} className="signin" onClick={handleOnSubmit}>{data.isSubmitting ? ("Loading") : ("Login")}
+                <button disabled={data.isSubmitting} className="signin" onClick={handleOnSubmit}>{data.isSubmitting ? ("Loading") : (`Login`)}
+                {isNil(data.errorMessage) ? "" : data.errorMessage}
                 </button>
             </div>
             <div className="privacy-footer">

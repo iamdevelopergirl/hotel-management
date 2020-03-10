@@ -50,7 +50,7 @@ class AccountHeader extends React.Component{
                     <FontAwesomeIcon icon={faHotel} size='2x' color="#f08216"/>
                 </div>
                 <div className='column popup-container'>
-                    <div className="na-account" onClick={(e) => this.onAccountClick(e)}>{this.props.email}</div>
+                    <div className="account-name" onClick={(e) => this.onAccountClick(e)}>{this.props.email}</div>
                     {this.state.showSignOutPopup ? <Popup onClick={() => this.signOut()} ><span id="sign-out">Sign out</span></Popup> : null}
                 </div>
             </div>

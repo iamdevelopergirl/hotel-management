@@ -120,7 +120,6 @@ export default class AddEditModal extends React.Component{
     }
 
     _fileSelectHandler(event){
-        console.log(event.target.files[0]);
         this.setState({
             selectedFile : event.target.files[0]
         });

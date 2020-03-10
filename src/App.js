@@ -37,7 +37,6 @@ function App() {
     state.user = AuthenticationService.getLoggedInUser();
     state.isAuthenticated = true; 
   }
-  console.log(state);
   return (
     <AuthContext.Provider
       value={{

@@ -1,10 +1,10 @@
 import React from 'react';
-import AccountHeader from './accountHeader.js';
+import AccountHeader from './account-header.js';
 import './styles/hotelInfo.css';
 import {ListViewToggle, TileViewToggle} from './view-toggle.js';
 import ItemsView from './item-view.js';
 import ModalContainer from './modal-container.js';
-import {isNil, HotelAPI, isFormDataObject} from './utils.js';
+import {isNil, isFormDataObject} from './utils.js';
 import axios from 'axios';
 import {Spinner} from './spinner.js';
 import Pagination from './pagination.js';

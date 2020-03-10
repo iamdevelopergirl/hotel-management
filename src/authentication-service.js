@@ -1,6 +1,5 @@
 import axios from 'axios';
 import {isNil} from './utils.js';
-const USER = "test";
 const loginAPI = `/api/login`;
 const loggedInUserAttribute = "authenticatedUser";
 
@@ -10,8 +9,8 @@ class AuthenticationService{
         return 'Basic ' + window.btoa(`${username}:${password}`)
     }
 
-    executeBasicAuthenticationService(username, password){
-        return axios.get(loginAPI, {
+    async executeBasicAuthenticationService(username, password){
+        return await axios.get(loginAPI, {
             headers : {
                 authorization : this.createBasicAuthToken(username, password)
             }
