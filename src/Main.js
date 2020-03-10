@@ -14,7 +14,7 @@ const initialState = {
     hasError: false,
 };
 
-const reducer = (state, action) => {
+export const reducer = (state, action) => {
     switch (action.type) {
       case "FETCH_ITEMS_REQUEST":
         return {

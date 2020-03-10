@@ -225,9 +225,9 @@ class HotelInfo extends React.Component{
                         <div className="hotel-widhet3 background"></div>
                         <div className="hotel-widhet4 background"></div>
                         <div className="hotel-widhet5 background"></div>
-                        <div className="add-item">
+                        <div className="add-item" onClick={this._onAddNewClicked}>
                             <div className="add-new">
-                                <div className="icn-container" onClick={this._onAddNewClicked}></div>
+                                <div className="icn-container"></div>
                             </div>
                         </div>
                     </div>

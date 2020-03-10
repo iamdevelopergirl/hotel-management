@@ -11,7 +11,7 @@ const initialState = {
   user: null
 };
 
-const reducer = (state, action) => {
+export const reducer = (state, action) => {
   switch (action.type) {
     case "LOGIN":
       return {
@@ -47,8 +47,6 @@ function App() {
         <div className="App">{!state.isAuthenticated ? <Login/> : <Main emailId={state.user}/>}</div>
       </div>
     </AuthContext.Provider>
-    // <div className="App">
-    // </div>
   );
 }
 
