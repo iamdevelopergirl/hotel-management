@@ -67,7 +67,7 @@ export class Settings extends React.Component {
     * @param  {object} items the object array containing the className, name and method
     */
     createItems(items){
-      var self = this;
+      let self = this;
             let output = this.props.optionsList.map((anItem, index) => <div className="Items" key={index} id={anItem.id} onClick={()=>{self.props.handleOptionsClick(anItem.id);}}>{anItem.name}</div>)
             return output;
     }
@@ -124,7 +124,7 @@ export class TextInput extends React.Component {
     * @return None
     */
     _onFocus(e) {
-      var val = e.target.value;
+      let val = e.target.value;
       e.target.value = '';
       e.target.value = val;
       this.setState({

@@ -65,7 +65,7 @@ it("should call _handleOptionsClick if general area like title/hotelname clicked
     }
     let viewTile = TestUtils.renderIntoDocument(<HotelTile item={item} itemIndex={1} itemKey={1} performAction={jest.fn()}/>);
     spyOn(viewTile,"_handleOptionsClick");
-    var title = TestUtils.findRenderedDOMComponentWithClass(viewTile, "hotelname_container");
+    let title = TestUtils.findRenderedDOMComponentWithClass(viewTile, "hotelname_container");
     TestUtils.Simulate.click(title);
     expect(viewTile._handleOptionsClick).toHaveBeenCalledWith("Edit");
 });

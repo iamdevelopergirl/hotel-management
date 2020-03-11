@@ -5,7 +5,7 @@ import ModalContainer from '../modal-container.js';
 it('should render Add/Edit Item screen if toDisplay is Edit', () => {
     let modalData = {};
     let toDisplay = "Edit"
-    var modalContainer = TestUtils.renderIntoDocument(
+    let modalContainer = TestUtils.renderIntoDocument(
         <ModalContainer modalData={modalData} toDisplay={toDisplay}/>
     );
     expect(TestUtils.findRenderedDOMComponentWithClass(modalContainer, "add-edit-form")).not.toBeNull();
@@ -15,7 +15,7 @@ it('should render Add/Edit Item screen if toDisplay is Edit', () => {
 it('should render Delete confirmation screen if toDisplay is Delete', () => {
     let modalData = {};
     let toDisplay = "Delete"
-    var modalContainer = TestUtils.renderIntoDocument(
+    let modalContainer = TestUtils.renderIntoDocument(
         <ModalContainer modalData={modalData} toDisplay={toDisplay}/>
     );
     expect(TestUtils.findRenderedDOMComponentWithClass(modalContainer, "delete")).not.toBeNull();
