@@ -33,6 +33,6 @@ Launches the test runner in the interactive watch mode and coverage.<br />
 
 Automation spes are added as part of this application. <br />
 
-1. cypress/interactions/login_logout_spec.js - Test Login and Logout flow <br />
-2. cypress/interactions/edit-item_spec.js - Test Edit item flow <br />
-3. cypress/interactions/delete-item_spec.js - Test Delete item flow <br />
+1. cypress/integration/login_logout_spec.js - Test Login and Logout flow <br />
+2. cypress/integration/edit-item_spec.js - Test Edit item flow <br />
+3. cypress/integration/delete-item_spec.js - Test Delete item flow <br />
