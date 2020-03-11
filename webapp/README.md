@@ -24,11 +24,15 @@ You will also see any lint errors in the console.
 ### `npm test`
 
 Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+### `npm test -- --coverage`
+
+Launches the test runner in the interactive watch mode and coverage.<br />
 
 ### `npm run cypress:open`
 
 Automation spes are added as part of this application. <br />
-1. login_logout_spec.js - Test Login and Logout flow
-2. edit-item_spec.js - Test Edit item flow
-3. delete-item_spec.js - Test Delete item flow
+
+1. cypress/interactions/login_logout_spec.js - Test Login and Logout flow <br />
+2. cypress/interactions/edit-item_spec.js - Test Edit item flow <br />
+3. cypress/interactions/delete-item_spec.js - Test Delete item flow <br />
