@@ -2,6 +2,10 @@ import React from 'react';
 import './styles/hotelInfo.css';
 import {Settings} from './shared.js';
 
+/**
+* @class HotelTile
+* @desc Component to show the tile view of hotel items
+*/
 export default class HotelTile extends React.Component{
     constructor(props){
         super(props);
@@ -12,14 +16,31 @@ export default class HotelTile extends React.Component{
         ];
     }
 
+    /**
+    * @private 
+    * @function _handleOptionsClick
+    * @desc Handle the container click to show edit modal
+    */
     _handleContainerClick(){
         this._handleOptionsClick("Edit");
     }
 
+    /**
+    * @private 
+    * @function _handleOptionsClick
+    * @desc Handle the options click
+    * @param {String} option Edit or Delete
+    */
     _handleOptionsClick(option){
         this._handleAction(option);
     }
 
+    /**
+    * @private 
+    * @function _handleAction
+    * @desc Handle the options click
+    * @param {String} option Edit or Delete
+    */
     _handleAction(option) {
         switch(option) {
           case "Edit":
@@ -31,10 +52,20 @@ export default class HotelTile extends React.Component{
         }
     }
 
+    /**
+    * @private 
+    * @function _callEdit
+    * @desc Handle the Edit click
+    */
     _callEdit(){
         this.props.performAction("Edit", this.props.itemKey);
     }
 
+    /**
+    * @private 
+    * @function _callDelete
+    * @desc Handle the Delete click
+    */
     _callDelete(){
         this.props.performAction("Delete", this.props.itemKey); 
     }

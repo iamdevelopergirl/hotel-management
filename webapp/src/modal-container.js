@@ -3,6 +3,10 @@ import './styles/hotelInfo.css';
 import AddEditModal from './add-edit-modal.js';
 import DeleteConfirmation from './delete-confirmation.js';
 
+/**
+* @class ModalContainer
+* @desc Parent container component to display the dialog based on the modal Type
+*/
 export default class ModalContainer extends React.Component{
     constructor(props){
         super(props);

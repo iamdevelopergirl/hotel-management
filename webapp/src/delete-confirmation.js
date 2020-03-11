@@ -1,6 +1,10 @@
 import React from 'react';
 import './styles/delete-confirmation.css';
 
+/**
+* @class DeleteConfirmation
+* @desc Dialog component for showing the delete confirmation screen
+*/
 export default class DeleteConfirmation extends React.Component{
     constructor(props){
         super(props);
@@ -8,6 +12,11 @@ export default class DeleteConfirmation extends React.Component{
         this._onCancelClick = this._onCancelClick.bind(this);
     }
 
+    /**
+    * @private 
+    * @function _onDeleteClick
+    * @desc Function to handle delete button click
+    */
     _onDeleteClick(){
         let payload = {
             searchKey : this.props.modalKey,
@@ -16,6 +25,11 @@ export default class DeleteConfirmation extends React.Component{
         this.props.handleModal(payload);
     }
 
+    /**
+    * @private 
+    * @function _onCancelClick
+    * @desc Function to handle cancel button click
+    */
     _onCancelClick(){
         this.props.handleModal();
     }

@@ -1,6 +1,10 @@
 import React from 'react';
 import './styles/popup.css';
 
+/**
+* @function Popup
+* @desc Component to show the sign out popup
+*/
 function Popup(props){
     
     const handleOnClick = event => { 

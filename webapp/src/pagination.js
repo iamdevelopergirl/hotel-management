@@ -1,6 +1,10 @@
 import React from 'react';
 import './styles/pagination.css';
 
+/**
+* @function Pagination
+* @desc Component to decide how many page numbers needs to be shown
+*/
 const Pagination = ({ itemsPerPage , totalItems, paginate}) => {
     
     const pageNumbers = [];

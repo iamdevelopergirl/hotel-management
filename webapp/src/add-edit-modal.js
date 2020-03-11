@@ -7,6 +7,10 @@ import AddressLogo from './images/ic-modal-addresses.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faImage } from '@fortawesome/free-solid-svg-icons'
 
+/**
+* @class AddEditModal
+* @desc Dialog component for showing the add/edit hotel information
+*/
 export default class AddEditModal extends React.Component{
     constructor(props){
         super(props);
@@ -25,20 +29,41 @@ export default class AddEditModal extends React.Component{
         this._fileSelectHandler = this._fileSelectHandler.bind(this);
     }
 
+    /**
+    * @private 
+    * @function _showErrorMessage
+    * @desc Function to set the state to show error message
+    */
     _showErrorMessage() {
         this.setState({showError : true});
     }
 
+    /**
+    * @private 
+    * @function _focusNextField
+    * @desc Function to focus the next input field
+    * @param {ref} refName name of the input field to be focussed
+    */
     _focusNextField(refName) {
         if(this[refName]) {
           this[refName].setFocus();
         }
     }
 
+    /**
+    * @private 
+    * @function _onClickCancel
+    * @desc Function to handle the cancel button
+    */
     _onClickCancel(){
         this.props.handleModal();
     }
 
+    /**
+    * @private 
+    * @function _onClickSave
+    * @desc Function to handle the save button
+    */
     _onClickSave(){
         const formData = new FormData();
         formData.append("name", this.name.state.values);
@@ -72,6 +97,12 @@ export default class AddEditModal extends React.Component{
         this.props.handleModal(payload);
     }
 
+    /**
+    * @private 
+    * @function _performValidation
+    * @desc Function to peform the input validation
+    * @param {Object} addObj input values added as key value pair
+    */
     _performValidation(addObj) {
         let errorState = false;
         let cityErrorMessage = "";
@@ -119,6 +150,12 @@ export default class AddEditModal extends React.Component{
         return errorState;
     }
 
+    /**
+    * @private 
+    * @function _fileSelectHandler
+    * @desc Function to handle the selected file during upload
+    * @param {Event} event event object during file upload
+    */
     _fileSelectHandler(event){
         this.setState({
             selectedFile : event.target.files[0]

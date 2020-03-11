@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import HotelInfo from './hotel-info.js'
 import { AuthContext } from "./App";
-import logo from './images/hotel-img.jpeg';
 import './styles/Login.css';
-import Pagination from './pagination.js';
 import axios from 'axios';
 import {Spinner} from './spinner.js';
 import { ErrorOccurred } from './error-occurred';
@@ -41,11 +39,15 @@ export const reducer = (state, action) => {
 };
 
 
+/**
+* @function Main
+* @desc Component for decide between login and main page
+*/
 export const Main = ({emailId}) => {
     const { state: authState, dispatch : authDispatch } = React.useContext(AuthContext);
     const [state, dispatch] = React.useReducer(reducer, initialState);
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(8);
+    const [itemsPerPage] = useState(4);
     const [updateCount, setUpdateCount] = useState(0);
     const [uploading, setUploading] = useState(false);
 
@@ -81,19 +83,39 @@ export const Main = ({emailId}) => {
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItem = state.hotelItems.length !== 0 ? state.hotelItems.slice(indexOfFirstItem, indexOfLastItem) : [];
 
+    /**
+    * @private 
+    * @function paginate
+    * @desc Function to set the current page
+    */
     const paginate = (pageNumber) => {
       setCurrentPage(pageNumber);
     }
 
+    /**
+    * @private 
+    * @function updateItems
+    * @desc Function to tell the reducer to 
+    */
     const updateItems = () => {
       let newUpdateCount = updateCount + 1;
       setUpdateCount(newUpdateCount)
     }
 
+    /**
+    * @private 
+    * @function logout
+    * @desc Function to call the logout api
+    */
     const logout = async () => {
       return await axios.get("/logout");
     }
 
+    /**
+    * @private 
+    * @function onLogoutClicked
+    * @desc Function to act according to logout api
+    */
     const onLogoutClicked = async () => {
       let res = await logout();
       if(!isNil(res.status) && res.status === 200){

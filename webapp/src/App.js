@@ -5,7 +5,6 @@ import Login from './login.js';
 import AuthenticationService from './authentication-service.js';
 export const AuthContext = React.createContext();
 
-
 const initialState = {
   isAuthenticated: false,
   user: null
@@ -31,6 +30,11 @@ export const reducer = (state, action) => {
   }
 };
 
+
+/**
+* @function App
+* @desc App component that routes the login page or main page
+*/
 function App() {
   const [state, dispatch] = React.useReducer(reducer, initialState);
   if(AuthenticationService.isUserLoggedIn()){

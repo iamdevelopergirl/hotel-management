@@ -3,6 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBowlingBall } from '@fortawesome/free-solid-svg-icons';
 import './styles/spinner.css';
 
+/**
+* @function Spinner
+* @desc Component to show while loading or processing any api call
+*/
 export function Spinner() {
     return (
         <div className="App-header">

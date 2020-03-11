@@ -4,12 +4,21 @@ import HotelList from './hotel-list.js';
 import './styles/hotelInfo.css';
 import NoItemView from './no-item-view.js';
 
+/**
+* @class ItemsView
+* @desc Component to decide which view to display
+*/
 export default class ItemsView extends React.Component {
     constructor(props){
         super(props);
         this._stopPropagation = this._stopPropagation.bind(this);
     }
 
+    /**
+    * @private 
+    * @function _stopPropagation
+    * @desc Stop the propagation to till parent
+    */
     _stopPropagation(event){
         event.stopPropagation();
     }
@@ -30,6 +39,10 @@ export default class ItemsView extends React.Component {
     }
 }
 
+/**
+* @class ItemsTileView
+* @desc Parent Component to show the tile view
+*/
 export class ItemsTileView extends React.Component {
     constructor(props) {
       super(props);
@@ -46,6 +59,10 @@ export class ItemsTileView extends React.Component {
     }
 }
 
+/**
+* @class ItemsTileView
+* @desc Parent Component to show the list view
+*/
 export class ItemsListView extends React.Component {
     constructor(props){
         super(props);

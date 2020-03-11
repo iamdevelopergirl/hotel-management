@@ -13,6 +13,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHatCowboy } from '@fortawesome/free-solid-svg-icons';
 
 
+/**
+* @class HotelInfo
+* @desc Main Component
+*/
 class HotelInfo extends React.Component{
     constructor(props){
         super(props);
@@ -36,6 +40,12 @@ class HotelInfo extends React.Component{
         this._onAddNewClicked = this._onAddNewClicked.bind(this);
     }
 
+    /**
+    * @private 
+    * @function _handleModal
+    * @desc Handle all the modal 
+    * @param {Object} payload { searchKey : "<id>" , payload : <data> }
+    */
     _handleModal(payload){
         this.setState({
             showModal : false
@@ -61,18 +71,46 @@ class HotelInfo extends React.Component{
         }
     }
 
+    /**
+    * @private 
+    * @function _addItem
+    * @desc Handle post api call
+    * @param {Formdata} data
+    * @returns {Promise} resolve with data and status 201 and reject with error otherwise
+    */
     async _addItem(data){
        return await axios.post("/api/hotel", data); 
     }
 
+    /**
+    * @private 
+    * @function _updateItem
+    * @desc Handle put api call
+    * @param {String} id
+    * @param {FormData} data
+    * @returns {Promise} resolve with data and status 200 and reject with error otherwise
+    */
     async _updateItem(id, data){
         return await axios.put(`/api/hotel/${id}`, data); 
     }
 
+    /**
+    * @private 
+    * @function _deleteItem
+    * @desc Handle delete api call
+    * @param {String} id
+    * @returns {Promise} resolve with data and status 200 and reject with error otherwise
+    */
     async _deleteItem(id){
         return await axios.delete(`/api/hotel/${id}`)
     }
 
+    /**
+    * @private 
+    * @function _addHotelItem
+    * @desc Handle adding hotel item to backend
+    * @param {Formdata} objToUpdate
+    */
     async _addHotelItem(objToUpdate){
         let data = objToUpdate;
         let res = await this._addItem(data);
@@ -86,6 +124,13 @@ class HotelInfo extends React.Component{
         }
     }
 
+    /**
+    * @private 
+    * @function _updateHotelItem
+    * @desc Handle updating hotel item to backend either edit or delete
+    * @param {Formdata} objToUpdate
+    * @param {String} id
+    */
     async _updateHotelItem(objToUpdate, searchKey){
         let response = null;
         if(!isFormDataObject(objToUpdate)){
@@ -105,6 +150,13 @@ class HotelInfo extends React.Component{
         }
     }
 
+    /**
+    * @private 
+    * @function _showModal
+    * @desc Function to handle dialog show
+    * @param {String} modalType
+    * @param {Object} id
+    */
     _showModal(modalType, id = null) {
         let tempData = {};
         if(!isNil(id)){
@@ -129,6 +181,13 @@ class HotelInfo extends React.Component{
         }
     }
 
+    /**
+    * @private 
+    * @function _performAction
+    * @desc Function to handle action from modal
+    * @param {String} action
+    * @param {Object} id
+    */
     _performAction(action, id){
         switch(action){
             case "Edit":
@@ -142,18 +201,38 @@ class HotelInfo extends React.Component{
         }
     }
 
+    /**
+    * @private 
+    * @function _onAddNewClicked
+    * @desc Function to handle add item click
+    */
     _onAddNewClicked(){
         this._performAction("Add");
     }
 
+    /**
+    * @private 
+    * @function _handleSwitchViewType
+    * @desc Function to handle the view type (TileView or ListView)
+    */
     _handleSwitchViewType(selectedViewType){
         this.setState({selectedViewType: selectedViewType, preventSetState: false});
     }
 
+    /**
+    * @private 
+    * @function _getBody
+    * @desc Function to get the document body. purely for UT
+    */
     _getBody() {
         return document.body;
     }
 
+    /**
+    * @private 
+    * @function _handleScroll
+    * @desc Function to handle the scroll of the main page
+    */
     _handleScroll() {
         const body = this._getBody();
         const {

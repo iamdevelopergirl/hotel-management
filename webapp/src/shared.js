@@ -4,7 +4,10 @@ import tileViewSettingsIcon from './images/ic-hotels-grid-settings.svg';
 import gridViewSettingsIcon from './images/ic-tab-ui-setting.svg';
 import activeSettingsIcon from './images/ic-tab-ui-setting-active.svg';
 
-
+/**
+* @class Settings
+* @desc Settinngs button component in tile view and list view
+*/
 export class Settings extends React.Component {
     
     constructor(props) {
@@ -46,33 +49,31 @@ export class Settings extends React.Component {
         </div>
       );
     }
-  }
+}
   
-  export class Options extends React.Component{
-    /**
-    * @constructor
-    * @desc the constructor for this class
-    *
-    * @param  {object} props the properties passed to the object while creating it
-    */
-    constructor(props){
+/**
+* @class Options
+* @desc Component to display Edit and Delete options
+*/
+export class Options extends React.Component{
+
+  constructor(props){
       super(props);
       this.createItems = this.createItems.bind(this);
-    }
+  }
   
     /**
     * @function createItems
     * @desc create list of items received from the passed array
-    *
     * @param  {object} items the object array containing the className, name and method
     */
-    createItems(items){
+  createItems(items){
       let self = this;
             let output = this.props.optionsList.map((anItem, index) => <div className="Items" key={index} id={anItem.id} onClick={()=>{self.props.handleOptionsClick(anItem.id);}}>{anItem.name}</div>)
             return output;
-    }
+  }
   
-    render(){
+  render(){
       let className = "tile-options-above";
       if(this.props.position !== null && this.props.position !== undefined) {
         className = "tile-options-" + this.props.position;
@@ -82,9 +83,13 @@ export class Settings extends React.Component {
             {this.createItems(this.items)}
         </div>
       )
-    }
   }
+}
 
+/**
+* @class TextInput
+* @desc Component to display Text input in add/edit modal
+*/
 export class TextInput extends React.Component {
 
     constructor(props) {

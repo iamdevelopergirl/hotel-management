@@ -4,7 +4,10 @@ import './styles/accountHeader.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHotel } from '@fortawesome/free-solid-svg-icons';
 
-
+/**
+* @class AccountHeader
+* @desc Header component after sign in to the application
+*/
 class AccountHeader extends React.Component{
     
     constructor(props){
@@ -25,10 +28,19 @@ class AccountHeader extends React.Component{
         window.removeEventListener('click', this.hidePopup, false);
     }
 
+    /**
+    * @function hidePopup
+    * @desc Function to hide the popup
+    */
     hidePopup() {
         this.setState({showSignOutPopup:false});
     }
 
+    /**
+    * @function onAccountClick
+    * @desc Steps to show the sign out popup on click of the username
+    * @param {Event} event click event
+    */
     onAccountClick(event) {
         event.stopPropagation();
         if(this.props.showPopup) {
@@ -37,10 +49,13 @@ class AccountHeader extends React.Component{
         }
     }
 
+    /**
+    * @function signOut
+    * @desc Allow the onLogoutClicked props to be called on click of Sign out
+    */
     signOut(){
         this.setState({showSignOutPopup:false});
         this.props.onLogoutClicked();
-        //
     }
 
     render(){

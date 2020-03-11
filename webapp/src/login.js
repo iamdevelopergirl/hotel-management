@@ -6,6 +6,10 @@ import { AuthContext } from "./App";
 import AuthenticationService from './authentication-service.js';
 import {isNil} from './utils.js';
 
+/**
+* @function Login
+* @desc Component for login view and authentication
+*/
 function Login(){
     const { dispatch } = React.useContext(AuthContext);
     
@@ -17,6 +21,13 @@ function Login(){
     };
 
     const [data, setData] = React.useState(initialState);
+    
+    /**
+    * @private 
+    * @function handleInputChange
+    * @desc Handle the input change on username and password field
+    * @param {Event} event object
+    */
     const handleInputChange = event => {
         setData({
         ...data,
@@ -24,6 +35,12 @@ function Login(){
         });
     };
 
+    /**
+    * @private 
+    * @function handleOnSubmit
+    * @desc Handle the form submit
+    * @param {Event} event object
+    */
     const handleOnSubmit = async event => {
         event.preventDefault();
         setData({
