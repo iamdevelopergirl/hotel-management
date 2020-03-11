@@ -56,7 +56,6 @@
     width: 70px;
     height: 70px;
     position: absolute;
-    animation: spin 6s infinite linear;
 }
 
 .main-ui-title {

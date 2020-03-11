@@ -2,7 +2,8 @@ import React from 'react';
 import Popup from './popup.js';
 import './styles/accountHeader.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHotel } from '@fortawesome/free-solid-svg-icons';
+import { faStore } from '@fortawesome/free-solid-svg-icons';
+import logo from './images/agoda-logo.png';
 
 /**
 * @class AccountHeader
@@ -62,7 +63,8 @@ class AccountHeader extends React.Component{
         return(
             <div className="header row">
                 <div className="hotel-image">
-                    <FontAwesomeIcon icon={faHotel} size='2x' color="#f08216"/>
+                    {/* <FontAwesomeIcon icon={faStore} size='2x' color="#f08216"/> */}
+                    <img className="image-logo" src={logo}/>
                 </div>
                 <div className='column popup-container'>
                     <div className="account-name" onClick={(e) => this.onAccountClick(e)}>{this.props.email}</div>

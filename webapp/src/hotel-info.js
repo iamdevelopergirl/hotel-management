@@ -10,7 +10,7 @@ import {Spinner} from './spinner.js';
 import Pagination from './pagination.js';
 import {ErrorOccurred} from './error-occurred.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHatCowboy } from '@fortawesome/free-solid-svg-icons';
+import { faHotel } from '@fortawesome/free-solid-svg-icons';
 
 
 /**
@@ -293,7 +293,7 @@ class HotelInfo extends React.Component{
                     <div className="widget-div"></div>
                     <div className="title-div">
                         <div className="main-ui-icon">
-                            <FontAwesomeIcon icon={faHatCowboy} size='5x' color="white"/>
+                            <FontAwesomeIcon icon={faHotel} size='5x' color="white"/>
                         </div>
                         <div className="main-ui-title"><b>Night Fury Hotel Inventory</b>
                         </div>
