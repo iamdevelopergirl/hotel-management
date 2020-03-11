@@ -32,7 +32,7 @@ class AccountHeader extends React.Component{
     onAccountClick(event) {
         event.stopPropagation();
         if(this.props.showPopup) {
-          var currentState = this.state.showSignOutPopup;
+          let currentState = this.state.showSignOutPopup;
           this.setState({showSignOutPopup:!currentState});
         }
     }
