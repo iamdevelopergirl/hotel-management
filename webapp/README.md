@@ -1,7 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-login username : manager
-login password : password
+login username : manager <br />
+login password : password <br/>
 
 ## Available Scripts
 Important Components : <br/>
