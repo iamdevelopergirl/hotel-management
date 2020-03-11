@@ -50,11 +50,11 @@ public class HotelController {
                                      User userIn) throws URISyntaxException {
         LOGGER.info("Request to add hotel {}", name);
 
-        String imageToAdd = getImage(image);
+        String imageToAdd = hotelService.getImage(image);
 
         Hotel hotel = new Hotel(name, address1, address2, city, postalCode, phoneNumber, imageToAdd);
-        Hotel result = hotelService.saveHotel(hotel);
-        return ResponseEntity.created(new URI("/api/hotel" + result.getId())).body(result);
+        hotel = hotelService.saveHotel(hotel);
+        return ResponseEntity.created(new URI("/api/hotels")).body(hotel);
     }
 
 
@@ -66,18 +66,18 @@ public class HotelController {
                                         @RequestParam("city") String city,
                                         @RequestParam("postalCode") String postalCode,
                                         @RequestParam("phoneNumber") String phoneNumber,
-                                        @PathVariable int id) throws URISyntaxException {
+                                        @PathVariable int id) {
 
         if(image != null){
-            String imageToUpdate = getImage(image);
+            String imageToUpdate = hotelService.getImage(image);
             Hotel hotel = new Hotel(id, name, address1, address2, city, postalCode, phoneNumber, imageToUpdate);
-            Hotel result = hotelService.saveHotel(hotel);
-            return ResponseEntity.ok().body(result);
+            hotel = hotelService.saveHotel(hotel);
+            return ResponseEntity.ok().body(hotel);
         }
 
         Hotel hotel = new Hotel(id, name, address1, address2, city, postalCode, phoneNumber);
-        Hotel result = hotelService.updateHotel(hotel);
-        return ResponseEntity.ok().body(result);
+        hotel = hotelService.updateHotel(hotel);
+        return ResponseEntity.ok().body(hotel);
     }
 
     @DeleteMapping("/hotel/{id}")
@@ -85,31 +85,6 @@ public class HotelController {
         LOGGER.info("Request to delete hotel: {}", id);
         hotelService.deleteHotel(id);
         return ResponseEntity.ok().build();
-    }
-
-
-    public String getImage(MultipartFile image) {
-        String imageToAdd = "";
-        File toUpload = null;
-        Path filepath = Paths.get(System.getProperty("user.dir"), image.getOriginalFilename());
-        try (OutputStream os = Files.newOutputStream(filepath)) {
-            os.write(image.getBytes());
-
-            toUpload = new File(String.valueOf(filepath));
-            Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap("cloud_name", "elakyahotelmanagementapp",
-                    "api_key", "158233582135223",
-                    "api_secret", "8DasrmfvrvJInKFwa2TAIzZZEDs"));
-
-            Map uploadResult = cloudinary.uploader().upload(toUpload, ObjectUtils.emptyMap());
-            imageToAdd = (String) uploadResult.get("url");
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        finally {
-            toUpload.delete();
-        }
-        return imageToAdd;
     }
 
 }

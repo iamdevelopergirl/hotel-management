@@ -15,6 +15,5 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
             throws IOException, ServletException {
 
         response.setStatus(HttpStatus.OK.value());
-        //response.sendRedirect(request.getContextPath() + "/");
     }
 }
