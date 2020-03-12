@@ -285,7 +285,7 @@ class HotelInfo extends React.Component{
             {
                 this.state.showModal ? <ModalContainer toDisplay={this.state.toDisplayModal} modalData={this.state.modalData} modalKey={this.state.modalKey} handleModal={this._handleModal}/> : null
             }
-            <AccountHeader email="elakya" onLogoutClicked={this.props.onLogoutClicked} showPopup/>
+            <AccountHeader email={this.props.emailId} onLogoutClicked={this.props.onLogoutClicked} showPopup/>
             <div className="main-container" style={this.state.mainContainerStyle}>
                 <div className="container-gradient"></div>
                 <div className="container-under-banner"></div>
