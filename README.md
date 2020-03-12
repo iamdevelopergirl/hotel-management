@@ -9,7 +9,7 @@
 To stop the process running on port 8080 and 3000, use `sh stop.sh` <br />
 To start the server and run the application, use `sh run.sh` <br />
 
-Since both back end and front end runs in a port, it is must to stop them before rerunning it again. <br />
+Note : Since both back end and front end runs in a port, it is must to stop them before rerunning it again. <br />
 
 
 ### Application specifics

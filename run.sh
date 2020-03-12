@@ -1,3 +1,3 @@
 #!/bin/bash
 mvn spring-boot:run &
-cd ./webapp/ && npm start
+cd ./webapp/ && npm install && npm start
