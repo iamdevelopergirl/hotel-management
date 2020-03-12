@@ -3,7 +3,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 login username : manager <br />
 login password : password <br/>
 
-## Available Scripts
+### Available Scripts
 Important Components : <br/>
 App.js <br/>
 Login.js <br/>

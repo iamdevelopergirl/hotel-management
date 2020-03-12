@@ -34,7 +34,7 @@ public class HotelService {
     }
 
     public Hotel saveHotel(Hotel hotel) {
-        hotel.setUser(userRepo.getOne(418));
+        hotel.setUser(userRepo.getOne(1));
         return hotelRepo.save(hotel);
     }
 

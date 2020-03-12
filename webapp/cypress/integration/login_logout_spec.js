@@ -1,10 +1,10 @@
 it("should validate login/logout functionality", ()=>{
     // visit the page
-    cy.visit("http://localhost:3009/")
+    cy.visit("http://localhost:3000/")
 
     // submit the form using username and password
-    cy.get('input[type=text]').type("elakya");
-    cy.get('input[type=password]').type("elakya{enter}");
+    cy.get('input[type=text]').type("manager");
+    cy.get('input[type=password]').type("password{enter}");
 
     // check for the main container
     cy.get(".main-container").should('exist');

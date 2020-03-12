@@ -1,8 +1,23 @@
 # hotel-management
 
-Server runs on http://localhost:8080 <br />
+### Prerequsites:
+`mvn` <br />
+`npm` <br />
 
-<b> Available api's :</b> <br/>
+
+### Deployment scripts
+To stop the process running on port 8080 and 3000, use `sh stop.sh` <br />
+To start the server and run the application, use `sh run.sh` <br />
+
+Since both back end and front end runs in a port, it is must to stop them before rerunning it again. <br />
+
+
+### Application specifics
+
+[README for FrontEnd](./webapp/README.md). <br/>
+
+username : manager <br />
+password : password <br/>
 
 ### Login Api
 `Request` { <br />
@@ -105,6 +120,3 @@ Server runs on http://localhost:8080 <br />
 `Unsuccessful Response` { <br />
     &nbsp;&nbsp;&nbsp;&nbsp;status : errorCode <br />
 } <br />
-
-
-ReadMe for front end is available inside webapp folder. <br/>
